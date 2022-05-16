@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import GeneralContext from '../../context/GeneralContext';
 
 const NavItem = props => {
-  const { id, lbl, isCurrentTab, onChange } = props;
+  const generalContext = useContext(GeneralContext);
+  const { id, lbl, isCurrentTab, queryStr } = props;
+
   return (
     <li className='nav-item' role='presentation'>
       <button
@@ -13,7 +17,7 @@ const NavItem = props => {
         role='tab'
         aria-controls={id}
         aria-selected='false'
-        onClick={onChange}
+        onClick={() => generalContext.tabOnChangeHandler({ id, queryStr })}
       >
         {lbl}
       </button>

@@ -1,50 +1,37 @@
 import React, { Component } from 'react';
-import NavContext from '../context/NavContext';
+import GeneralContext from '../context/GeneralContext';
 
 import NavItem from './common/NavItem';
 
 class NavBar extends Component {
-  static contextType = NavContext;
-  state = {};
-
-  tabOnChangeHandler = e => {
-    this.context.setState({
-      currentTab: e.target.id,
-    });
-  };
-
   render() {
     return (
-      <>
-        <NavContext.Consumer>
-          {({ currentTab }) => (
+      <GeneralContext.Consumer>
+        {generalContext => {
+          const { currentTab } = generalContext.state;
+          return (
             <ul
               className='nav nav-tabs justify-content-center'
               id='myTab'
               role='tablist'
             >
+              <NavItem id='all' lbl='All' isCurrentTab={currentTab === 'all'} />
               <NavItem
-                id='all-tab'
-                lbl='All'
-                isCurrentTab={currentTab === 'all-tab'}
-                onChange={this.tabOnChangeHandler}
-              />
-              <NavItem
-                id='pizza-pairable-tab'
+                id='pizza-pairable'
                 lbl='Pizza Pairable'
-                isCurrentTab={currentTab === 'pizza-pairable-tab'}
-                onChange={this.tabOnChangeHandler}
+                queryStr='food=pizza'
+                isCurrentTab={currentTab === 'pizza-pairable'}
               />
               <NavItem
-                id='steak-pairable-tab'
+                id='steak-pairable'
                 lbl='Steak Pairable'
-                isCurrentTab={currentTab === 'steak-pairable-tab'}
-                onChange={this.tabOnChangeHandler}
+                queryStr='food=steak'
+                isCurrentTab={currentTab === 'steak-pairable'}
               />
             </ul>
-          )}
-        </NavContext.Consumer>
-      </>
+          );
+        }}
+      </GeneralContext.Consumer>
     );
   }
 }

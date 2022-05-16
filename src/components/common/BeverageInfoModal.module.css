@@ -1,0 +1,9 @@
+.beverage-info-modal .img-box {
+  height: 170px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.beverage-info-modal .img-box img {
+  height: 100%;
+}

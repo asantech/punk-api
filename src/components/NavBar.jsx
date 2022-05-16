@@ -8,24 +8,29 @@ class NavBar extends Component {
     return (
       <GeneralContext.Consumer>
         {generalContext => {
-          const { currentTab } = generalContext.state;
+          const { currentTab, beverages } = generalContext.state;
           return (
             <ul
               className='nav nav-tabs justify-content-center'
               id='myTab'
               role='tablist'
             >
-              <NavItem id='all' lbl='All' isCurrentTab={currentTab === 'all'} />
+              <NavItem
+                id='all'
+                lbl='All'
+                isCurrentTab={currentTab === 'all'}
+                query={beverages['all'].query}
+              />
               <NavItem
                 id='pizza-pairable'
                 lbl='Pizza Pairable'
-                queryStr='food=pizza'
+                query={beverages['pizza-pairable'].query}
                 isCurrentTab={currentTab === 'pizza-pairable'}
               />
               <NavItem
                 id='steak-pairable'
                 lbl='Steak Pairable'
-                queryStr='food=steak'
+                query={beverages['steak-pairable'].query}
                 isCurrentTab={currentTab === 'steak-pairable'}
               />
             </ul>

@@ -21,7 +21,7 @@ class BeverageInfoModal extends Component {
 
     return (
       <Modal
-        bsPrefix={'modal ' + styles['beverage-info-modal']}
+        bsPrefix={styles['beverage-info-modal'] + ' modal'}
         show={this.state.show}
         onHide={this.handleClose}
       >
@@ -33,11 +33,15 @@ class BeverageInfoModal extends Component {
         </Modal.Header>
         <Modal.Body>
           <Modal.Title>{name}</Modal.Title>
-          <div>{tagline}</div>
+          <div>
+            <b>tagline:</b> {tagline}
+          </div>
           <div>
             <b>abv:</b> {abv}
           </div>
-          <div>{description}</div>
+          <div>
+            <b>description:</b> {description}
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='primary' onClick={this.handleClose}>

@@ -11,18 +11,14 @@
   height: 100%;
 }
 
-.beverage-card .card-title {
-  height: 48px;
+.beverage-card .card-title,
+.beverage-card .card-text {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
-.beverage-card .card-text {
-  overflow: hidden;
-  /* text-overflow: ellipsis; */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+.beverage-card .card-title {
+  height: 48px;
 }

@@ -4,7 +4,7 @@ import GeneralContext from '../../context/GeneralContext';
 
 const NavItem = props => {
   const generalContext = useContext(GeneralContext);
-  const { id, lbl, isCurrentTab, queryStr } = props;
+  const { id, lbl, isCurrentTab, query } = props;
 
   return (
     <li className='nav-item' role='presentation'>
@@ -17,7 +17,12 @@ const NavItem = props => {
         role='tab'
         aria-controls={id}
         aria-selected='false'
-        onClick={() => generalContext.tabOnChangeHandler({ id, queryStr })}
+        onClick={() =>
+          generalContext.tabOnChangeHandler({
+            id,
+            query,
+          })
+        }
       >
         {lbl}
       </button>

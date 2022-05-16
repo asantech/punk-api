@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 
-import ReactDOM from 'react-dom';
-
-import { render } from '@testing-library/react';
-
-import BeverageInfoModal from './BeverageInfoModal';
-
 import GeneralContext from '../../context/GeneralContext';
 
 import { Star } from 'react-bootstrap-icons';
@@ -18,7 +12,10 @@ class BeverageCard extends Component {
   render() {
     const { name, image_url, tagline } = this.props.beverage;
     return (
-      <div className={styles['beverage-card'] + ' card'}>
+      <div
+        className={styles['beverage-card'] + ' card'}
+        onClick={() => this.context.showBeverageInfoModal(this.props.beverage)}
+      >
         <Star className='mt-2 mx-2' />
         <div className={styles['img-box'] + ' p-3'}>
           <img src={image_url} className='' alt={name} />

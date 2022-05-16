@@ -24,7 +24,7 @@ class BeverageCard extends Component {
           <img src={image_url} className='' alt={name} />
         </div>
         <div className='card-body'>
-          <h5 className='card-title'>{name}</h5>
+          <h5 className={styles['card-title'] + ' mb-4'}>{name}</h5>
           <p className={styles['card-text']}>{tagline}</p>
         </div>
       </div>

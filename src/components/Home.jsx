@@ -25,12 +25,10 @@ class Home extends Component {
     },
   };
 
-  loadBeverages = async tab => {
+  loadSelectedBeverages = async tab => {
     const { beverages } = this.state;
 
     const { id, queryStr } = tab;
-
-    console.log(id, queryStr);
 
     if (beverages[id].length === 0) {
       const selectedBeverages = await beverageServices.getBeverages(
@@ -38,19 +36,6 @@ class Home extends Component {
       );
       return selectedBeverages;
     }
-
-    // this.context.loadedTabs.push(id);
-    // let a = {
-    //   [id]: currentBeverages,
-    // };
-    // console.log(a);
-    // this.context.setState({
-    //   beverages: {
-    //     [id]: currentBeverages,
-    //   },
-    // });
-    // }
-    // }
   };
 
   updateBeverages = newState => {
@@ -72,16 +57,21 @@ class Home extends Component {
   };
 
   tabOnChangeHandler = async ({ id, queryStr }) => {
-    const selectedBeverages = await this.loadBeverages({ id, queryStr });
     const state = { ...this.state };
     state.currentTab = id;
+    this.setState(state);
+
     if (state.beverages[id].length === 0) {
+      const selectedBeverages = await this.loadSelectedBeverages({
+        id,
+        queryStr,
+      });
+      const state = { ...this.state };
       const beverages = { ...this.state.beverages };
       beverages[id] = selectedBeverages;
       state.beverages = beverages;
+      this.setState(state);
     }
-
-    this.setState(state);
   };
 
   render() {

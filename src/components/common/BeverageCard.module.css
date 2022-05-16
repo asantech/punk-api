@@ -11,8 +11,15 @@
   height: 100%;
 }
 
+.beverage-card .card-title {
+  height: 48px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .beverage-card .card-text {
-  height: 125px;
   overflow: hidden;
   /* text-overflow: ellipsis; */
   display: -webkit-box;

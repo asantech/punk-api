@@ -17,9 +17,39 @@ import './App.css';
 
 class App extends Component {
   state = {
-    cart: [],
-    favourites: [],
+    cart: this.getStoredData(sessionStorage.getItem('cart')),
+    favourites: this.getStoredData(sessionStorage.getItem('favourites')),
   };
+
+  componentDidMount() {
+    if (
+      sessionStorage.getItem('cart') === null ||
+      this.isExpirationTimePassed(
+        this.getStoredExpirationTime(sessionStorage.getItem('cart'))
+      )
+    )
+      sessionStorage.setItem(
+        'cart',
+        JSON.stringify({
+          data: [],
+          expirationTime: 0,
+        })
+      );
+
+    if (
+      sessionStorage.getItem('favourites') === null ||
+      this.isExpirationTimePassed(
+        this.getStoredExpirationTime(sessionStorage.getItem('favourites'))
+      )
+    )
+      sessionStorage.setItem(
+        'favourites',
+        JSON.stringify({
+          data: [],
+          expirationTime: 0,
+        })
+      );
+  }
 
   isItemAdded = (collection, beverageInfo) => {
     const selectedItem = _.filter(collection, function (item) {
@@ -28,7 +58,7 @@ class App extends Component {
     return selectedItem.length ? true : false;
   };
 
-  addToCollection = (collectionName, item) => {
+  addToCollection = (collectionName, item, expirationDuration) => {
     if (!this.isItemAdded(this.state[collectionName], item)) {
       const state = { ...this.state };
       let collection = [...this.state[collectionName]];
@@ -36,6 +66,11 @@ class App extends Component {
       state[collectionName] = collection;
       this.setState(state);
       toast.success(`The item got successfully added to ${collectionName}.`);
+      this.setDataToSessionStorage(
+        collectionName,
+        collection,
+        expirationDuration
+      );
     } else {
       toast.error(`This item is already deleted from ${collectionName}.`);
     }
@@ -46,12 +81,36 @@ class App extends Component {
       const state = { ...this.state };
       let collection = [...this.state[collectionName]];
       collection = collection.filter(_item => _item.id !== item.id);
+      if (collection.length === 0)
+        this.setDataToSessionStorage(collectionName, [], 0);
       state[collectionName] = collection;
       this.setState(state);
       toast.success(`The item got successfully added to ${collectionName}.`);
     } else {
       toast.error(`This item is already deleted from ${collectionName}.`);
     }
+  };
+
+  setDataToSessionStorage = (key, data, expirationDuration) => {
+    sessionStorage.setItem(
+      key,
+      JSON.stringify({
+        data,
+        expirationTime: new Date().getTime() + expirationDuration,
+      })
+    );
+  };
+
+  getStoredExpirationTime = jsonStr => {
+    return JSON.parse(jsonStr).expirationTime;
+  };
+
+  getStoredData(jsonStr) {
+    return JSON.parse(jsonStr).data;
+  }
+
+  isExpirationTimePassed = exiprationTime => {
+    return new Date().getTime() >= exiprationTime;
   };
 
   render() {

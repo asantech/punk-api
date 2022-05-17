@@ -16,7 +16,11 @@ class BeverageInfoModal extends Component {
   };
 
   addToCartBtnOnClickHandler = () => {
-    this.props.appContext.addToCollection('cart', this.props.beverageInfo);
+    this.props.appContext.addToCollection(
+      'cart',
+      this.props.beverageInfo,
+      7 * 86400
+    );
     this.handleClose();
   };
 
@@ -28,7 +32,8 @@ class BeverageInfoModal extends Component {
   addToFavouritesBtnOnClickHandler = () => {
     this.props.appContext.addToCollection(
       'favourites',
-      this.props.beverageInfo
+      this.props.beverageInfo,
+      30 * 86400
     );
     this.handleClose();
   };

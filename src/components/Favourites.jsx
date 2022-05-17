@@ -13,7 +13,7 @@ class Favourites extends Component {
       <div className={styles['beverages-segment']}>
         <h2>Favourite beverages ( {this.context.state.favourites.length} )</h2>
         <div className={styles['beverages-container'] + ' mb-2'}>
-          {this.context.state.cart.map(beverageInfo => (
+          {this.context.state.favourites.map(beverageInfo => (
             <BeverageCard key={beverageInfo.id} beverage={beverageInfo} />
           ))}
         </div>

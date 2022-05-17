@@ -47,7 +47,11 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    this.loadSelectedBeverages({ id: 'all', query: { page: 1 } });
+    this.loadSelectedBeverages({
+      id: 'all',
+      query: { page: 1 },
+      state: this.state,
+    });
   }
 
   convertQueryObjToStr(query) {
@@ -60,7 +64,6 @@ class Home extends Component {
   }
 
   getSelectedBeverages = async ({ id, query }) => {
-    const { beverages } = this.state;
     const queryStr = this.convertQueryObjToStr(query);
     const selectedBeverages = await beverageServices.getBeverages(
       queryStr ?? ''
@@ -68,13 +71,11 @@ class Home extends Component {
     return selectedBeverages;
   };
 
-  loadSelectedBeverages = async ({ id, query }) => {
-    if (this.state.beverages[id].isLoading === false) {
-      const state = { ...this.state };
+  loadSelectedBeverages = async ({ id, query, state }) => {
+    if (state.beverages[id].isLoading === false) {
       state.beverages[id].isLoading = true;
       this.setState(state);
     }
-    const state = { ...this.state };
     try {
       const selectedBeverages = await this.getSelectedBeverages({
         id,
@@ -102,7 +103,11 @@ class Home extends Component {
     // render(<BeverageInfoModal show={true} />);
     render(
       ReactDOM.createPortal(
-        <BeverageInfoModal show={true} beverageInfo={beverageInfo} />,
+        <BeverageInfoModal
+          show={true}
+          beverageInfo={beverageInfo}
+          appContext={this.context}
+        />,
         document.getElementById('overlay-root')
       )
     );
@@ -117,7 +122,7 @@ class Home extends Component {
     this.setState(state);
 
     if (state.beverages[id].list.length === 0) {
-      this.loadSelectedBeverages({ id, query });
+      this.loadSelectedBeverages({ id, query, state });
     }
   };
 
@@ -133,8 +138,18 @@ class Home extends Component {
         }}
       >
         <>
-          <Link className='btn btn-primary position-absolute end-0' to='/cart'>
+          <Link
+            className='btn btn-success position-absolute start-0'
+            to='/cart'
+          >
             Cart ( {this.context.state.cart.length} )
+          </Link>
+          <Link
+            className='btn btn-primary position-absolute'
+            to='/favourites'
+            style={{ left: '100px' }}
+          >
+            Favourites ( {this.context.state.favourites.length} )
           </Link>
 
           <NavBar />

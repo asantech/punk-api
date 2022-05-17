@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-
-import { Modal, Button } from 'react-bootstrap';
-
-import HomePageContext from '../../context/HomePageContext';
+import { Modal } from 'react-bootstrap';
 
 import styles from './BeverageInfoModal.module.css';
 
 class BeverageInfoModal extends Component {
+  // بعدا برای روش دسترسی مناسب تر به appcontext فکری شود
   state = {
     show: this.props.show,
   };
@@ -17,9 +15,35 @@ class BeverageInfoModal extends Component {
     });
   };
 
+  addToCartBtnOnClickHandler = () => {
+    this.props.appContext.addToCollection('cart', this.props.beverageInfo);
+    this.handleClose();
+  };
+
+  removeFromCartBtnOnClickHandler = () => {
+    this.props.appContext.removeFromCollection('cart', this.props.beverageInfo);
+    this.handleClose();
+  };
+
+  addToFavouritesBtnOnClickHandler = () => {
+    this.props.appContext.addToCollection(
+      'favourites',
+      this.props.beverageInfo
+    );
+    this.handleClose();
+  };
+
+  removeFromFavouritesBtnOnClickHandler = () => {
+    this.props.appContext.removeFromCollection(
+      'favourites',
+      this.props.beverageInfo
+    );
+    this.handleClose();
+  };
+
   render() {
-    const { name, tagline, image_url, description, abv, srm } =
-      this.props.beverageInfo;
+    const { beverageInfo, appContext } = this.props;
+    const { name, tagline, image_url, description, abv, srm } = beverageInfo;
 
     return (
       <Modal
@@ -30,7 +54,7 @@ class BeverageInfoModal extends Component {
         <Modal.Header>
           {' '}
           <div className={styles['img-box']}>
-            <img src={image_url} />
+            <img src={image_url} alt={name} />
           </div>
         </Modal.Header>
         <Modal.Body>
@@ -49,9 +73,39 @@ class BeverageInfoModal extends Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='primary' onClick={this.handleClose}>
-            Add to Cart
-          </Button>
+          {!appContext.isItemAdded(appContext.state.cart, beverageInfo) ? (
+            <button
+              className='btn btn-success'
+              onClick={this.addToCartBtnOnClickHandler}
+            >
+              Add to Cart
+            </button>
+          ) : (
+            <button
+              className='btn btn-danger'
+              onClick={this.removeFromCartBtnOnClickHandler}
+            >
+              Remove from Cart
+            </button>
+          )}
+          {!appContext.isItemAdded(
+            appContext.state.favourites,
+            beverageInfo
+          ) ? (
+            <button
+              className='btn btn-primary'
+              onClick={this.addToFavouritesBtnOnClickHandler}
+            >
+              Add to Favourites
+            </button>
+          ) : (
+            <button
+              className='btn btn-danger'
+              onClick={this.removeFromFavouritesBtnOnClickHandler}
+            >
+              Remove from Favourites
+            </button>
+          )}
         </Modal.Footer>
       </Modal>
     );

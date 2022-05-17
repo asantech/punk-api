@@ -4,7 +4,7 @@ import HomePageContext from '../../context/HomePageContext';
 
 const NavItem = props => {
   const homePageContext = useContext(HomePageContext);
-  const { id, lbl, query } = props;
+  const { id, lbl } = props;
 
   return (
     <li className='nav-item' role='presentation'>
@@ -23,7 +23,7 @@ const NavItem = props => {
         onClick={() =>
           homePageContext.tabOnChangeHandler({
             id,
-            query,
+            query: homePageContext.state.beverages[id].query,
           })
         }
       >

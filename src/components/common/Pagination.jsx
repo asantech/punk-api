@@ -14,11 +14,13 @@ const Pagination = props => {
             className='page-link'
             aria-label='Previous'
             onClick={() => {
+              const state = { ...homePageContext.state };
               const query = { ...homePageContext.state.beverages[id].query };
               query.page -= 1;
               homePageContext.loadSelectedBeverages({
                 id,
                 query,
+                state,
               });
             }}
           >
@@ -35,11 +37,13 @@ const Pagination = props => {
             className='page-link'
             aria-label='Next'
             onClick={() => {
+              const state = { ...homePageContext.state };
               const query = { ...homePageContext.state.beverages[id].query };
               query.page += 1;
               homePageContext.loadSelectedBeverages({
                 id,
                 query,
+                state,
               });
             }}
           >

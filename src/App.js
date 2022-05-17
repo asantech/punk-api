@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import _ from 'lodash';
 
 import AppContext from './context/AppContext';
 
 import Home from './components/Home';
 import NotFound from './components/NotFound';
 import Cart from './components/Cart';
+import Favourites from './components/Favourites';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,22 +18,40 @@ import './App.css';
 class App extends Component {
   state = {
     cart: [],
+    favourites: [],
   };
 
-  addToCart = beverageInfo => {
-    const state = { ...this.state };
-    const cart = [...this.state.cart];
-    cart.push(beverageInfo);
-    state.cart = cart;
-    this.setState(state);
+  isItemAdded = (collection, beverageInfo) => {
+    const selectedItem = _.filter(collection, function (item) {
+      return item.id === beverageInfo.id;
+    });
+    return selectedItem.length ? true : false;
   };
 
-  removeFromCart = beverageInfo => {
-    const state = { ...this.state };
-    const cart = [...this.state.cart];
-    cart = cart.filter(b => b.id !== beverageInfo.id);
-    state.cart = cart;
-    this.setState(state);
+  addToCollection = (collectionName, item) => {
+    if (!this.isItemAdded(this.state[collectionName], item)) {
+      const state = { ...this.state };
+      let collection = [...this.state[collectionName]];
+      collection.push(item);
+      state[collectionName] = collection;
+      this.setState(state);
+      toast.success(`The item got successfully added to ${collectionName}.`);
+    } else {
+      toast.error(`This item is already deleted from ${collectionName}.`);
+    }
+  };
+
+  removeFromCollection = (collectionName, item) => {
+    if (this.isItemAdded(this.state[collectionName], item)) {
+      const state = { ...this.state };
+      let collection = [...this.state[collectionName]];
+      collection = collection.filter(_item => _item.id !== item.id);
+      state[collectionName] = collection;
+      this.setState(state);
+      toast.success(`The item got successfully added to ${collectionName}.`);
+    } else {
+      toast.error(`This item is already deleted from ${collectionName}.`);
+    }
   };
 
   render() {
@@ -39,8 +59,9 @@ class App extends Component {
       <AppContext.Provider
         value={{
           state: this.state,
-          addToCart: this.addToCart,
-          removeFromCart: this.removeFromCart,
+          isItemAdded: this.isItemAdded,
+          addToCollection: this.addToCollection,
+          removeFromCollection: this.removeFromCollection,
         }}
       >
         <ToastContainer theme='colored' />
@@ -49,6 +70,7 @@ class App extends Component {
             <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/cart' exact component={Cart} />
+              <Route path='/favourites' exact component={Favourites} />
               <Route path='/not-found' component={NotFound} />
               <Redirect to='not-found' />
             </Switch>

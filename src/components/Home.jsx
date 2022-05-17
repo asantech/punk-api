@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { render } from '@testing-library/react';
 
-import GeneralContext from '../context/GeneralContext';
-
-import NavBar from '../components/NavBar';
+import AppContext from '../context/AppContext';
+import HomePageContext from '../context/HomePageContext';
 
 import * as beverageServices from '../services/beverageServices';
 
+import NavBar from '../components/NavBar';
 import BeverageInfoModal from '../components/common/BeverageInfoModal';
 import TabPane from './common/TabPane';
 import BeveragesSegment from './common/BeveragesSegment';
 
 class Home extends Component {
-  static contextType = GeneralContext;
-
+  static contextType = AppContext;
   state = {
     currentTab: 'all',
-    modalDisplay: false,
     beverages: {
       all: {
         list: [],
         query: {
           page: 1,
         },
+        isLoading: false,
       },
       'pizza-pairable': {
         list: [],
@@ -31,6 +32,7 @@ class Home extends Component {
           page: 1,
           food: 'pizza',
         },
+        isLoading: false,
       },
       'steak-pairable': {
         list: [],
@@ -38,8 +40,10 @@ class Home extends Component {
           page: 1,
           food: 'steak',
         },
+        isLoading: false,
       },
     },
+    modalDisplay: false,
   };
 
   componentDidMount() {
@@ -65,15 +69,28 @@ class Home extends Component {
   };
 
   loadSelectedBeverages = async ({ id, query }) => {
-    const selectedBeverages = await this.getSelectedBeverages({
-      id,
-      query,
-    });
+    if (this.state.beverages[id].isLoading === false) {
+      const state = { ...this.state };
+      state.beverages[id].isLoading = true;
+      this.setState(state);
+    }
     const state = { ...this.state };
-    const beverages = { ...this.state.beverages };
-    beverages[id].list = selectedBeverages;
-    beverages[id].query = query;
-    state.beverages = beverages;
+    try {
+      const selectedBeverages = await this.getSelectedBeverages({
+        id,
+        query,
+      });
+
+      const beverages = { ...this.state.beverages };
+      beverages[id].list = selectedBeverages;
+      beverages[id].query = query;
+      beverages[id].isLoading = false;
+      state.beverages = beverages;
+      toast.success('beverages are loaded successfully.');
+    } catch (error) {
+      toast.error(error.message);
+      state.beverages[id].isLoading = false;
+    }
     this.setState(state);
   };
 
@@ -106,7 +123,7 @@ class Home extends Component {
 
   render() {
     return (
-      <GeneralContext.Provider
+      <HomePageContext.Provider
         value={{
           state: this.state,
           tabOnChangeHandler: this.tabOnChangeHandler,
@@ -116,46 +133,38 @@ class Home extends Component {
         }}
       >
         <>
+          <Link className='btn btn-primary position-absolute end-0' to='/cart'>
+            Cart ( {this.context.state.cart.length} )
+          </Link>
+
           <NavBar />
-          <GeneralContext.Consumer>
-            {generalContext => {
-              const { currentTab } = generalContext.state;
-              return (
-                <>
-                  <div className='tab-content pt-4'>
-                    <TabPane
-                      id='all'
-                      component={() => (
-                        <BeveragesSegment id='all' title='All Beverages' />
-                      )}
-                      isCurrentTab={currentTab === 'all'}
-                    />
-                    <TabPane
-                      id='pizza-pairable'
-                      component={() => (
-                        <BeveragesSegment
-                          id='pizza-pairable'
-                          title='Pizza Paired Beverages'
-                        />
-                      )}
-                      isCurrentTab={currentTab === 'pizza-pairable'}
-                    />
-                    <TabPane
-                      id='steak-pairable'
-                      component={() => (
-                        <BeveragesSegment
-                          id='steak-pairable'
-                          title='Steak Paired Beverages'
-                          queryStr='food=steak'
-                        />
-                      )}
-                      isCurrentTab={currentTab === 'steak-pairable'}
-                    />
-                  </div>
-                </>
-              );
-            }}
-          </GeneralContext.Consumer>
+          <div className='tab-content pt-2'>
+            <TabPane
+              id='all'
+              component={() => (
+                <BeveragesSegment id='all' title='All Beverages' />
+              )}
+            />
+            <TabPane
+              id='pizza-pairable'
+              component={() => (
+                <BeveragesSegment
+                  id='pizza-pairable'
+                  title='Pizza Paired Beverages'
+                />
+              )}
+            />
+            <TabPane
+              id='steak-pairable'
+              component={() => (
+                <BeveragesSegment
+                  id='steak-pairable'
+                  title='Steak Paired Beverages'
+                />
+              )}
+            />
+          </div>
+
           {/* {ReactDOM.createPortal(
             <BeverageInfoModal
               show={this.state.modalDisplay}
@@ -164,7 +173,7 @@ class Home extends Component {
             document.getElementById('overlay-root')
           )} */}
         </>
-      </GeneralContext.Provider>
+      </HomePageContext.Provider>
     );
   }
 }

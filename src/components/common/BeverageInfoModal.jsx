@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { Modal, Button } from 'react-bootstrap';
 
+import HomePageContext from '../../context/HomePageContext';
+
 import styles from './BeverageInfoModal.module.css';
 
 class BeverageInfoModal extends Component {
@@ -41,6 +43,9 @@ class BeverageInfoModal extends Component {
           </div>
           <div>
             <b>description:</b> {description}
+          </div>
+          <div>
+            <b>price:</b> {srm}
           </div>
         </Modal.Body>
         <Modal.Footer>

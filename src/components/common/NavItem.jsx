@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
 
-import GeneralContext from '../../context/GeneralContext';
+import HomePageContext from '../../context/HomePageContext';
 
 const NavItem = props => {
-  const generalContext = useContext(GeneralContext);
-  const { id, lbl, isCurrentTab, query } = props;
+  const homePageContext = useContext(HomePageContext);
+  const { id, lbl, query } = props;
 
   return (
     <li className='nav-item' role='presentation'>
       <button
-        className={'nav-link' + (isCurrentTab ? ' active' : '')}
+        className={
+          'nav-link' +
+          (homePageContext.state.currentTab === id ? ' active' : '')
+        }
         id={id}
         data-bs-toggle='tab'
         data-bs-target={'#' + id}
@@ -18,7 +21,7 @@ const NavItem = props => {
         aria-controls={id}
         aria-selected='false'
         onClick={() =>
-          generalContext.tabOnChangeHandler({
+          homePageContext.tabOnChangeHandler({
             id,
             query,
           })

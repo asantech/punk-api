@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import GeneralContext from '../../context/GeneralContext';
+import HomePageContext from '../../context/HomePageContext';
 
 import { Star } from 'react-bootstrap-icons';
 
 import styles from './BeverageCard.module.css';
 
 class BeverageCard extends Component {
-  static contextType = GeneralContext;
+  static contextType = HomePageContext;
 
   render() {
     const { name, image_url, tagline } = this.props.beverage;

@@ -11,9 +11,8 @@ import HomePageContext from '../context/HomePageContext';
 import * as beverageServices from '../services/beverageServices';
 
 import NavBar from '../components/NavBar';
+import TabContents from './TabContents';
 import BeverageInfoModal from '../components/common/BeverageInfoModal';
-import TabPane from './common/TabPane';
-import BeveragesSegment from './common/BeveragesSegment';
 
 class Home extends Component {
   static contextType = AppContext;
@@ -62,8 +61,8 @@ class Home extends Component {
   componentDidMount() {
     this.loadSelectedBeverages({
       id: 'all',
-      query: { page: 1 },
-      state: this.state,
+      // query: { page: 1 },
+      newState: this.state,
     });
   }
 
@@ -84,18 +83,18 @@ class Home extends Component {
     return selectedBeverages;
   };
 
-  loadSelectedBeverages = async ({ id, query, state }) => {
-    if (state.beverages[id].isLoading === false) {
-      state.beverages[id].isLoading = true;
-      this.setState(state);
+  loadSelectedBeverages = async ({ id, newState }) => {
+    if (newState.beverages[id].isLoading === false) {
+      newState.beverages[id].isLoading = true;
+      this.setState(newState);
     }
     try {
       let selectedBeverages = await this.getSelectedBeverages({
         id,
-        query,
+        query: newState.beverages[id].query,
       });
 
-      const { beverages } = state;
+      const { beverages } = newState;
 
       selectedBeverages = _.orderBy(
         selectedBeverages,
@@ -103,37 +102,35 @@ class Home extends Component {
         [beverages[id].sort.order]
       );
       beverages[id].list = selectedBeverages;
-      beverages[id].query = query;
+      // beverages[id].query = query;
       beverages[id].isLoading = false;
-      toast.success('beverages are loaded successfully.');
+      toast.success('beverages are loaded successfully.', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     } catch (error) {
       toast.error(error.message);
-      state.beverages[id].isLoading = false;
+      newState.beverages[id].isLoading = false;
     }
-    this.setState(state);
+    this.setState(newState);
   };
 
   sortItems = ({ id, sortBy }) => {
     const { sort } = this.state.beverages[id];
 
     const newState = { ...this.state };
+    const selectedBeverages = newState.beverages[id];
 
     if (sort.by === sortBy) {
-      newState.beverages[id].sort.order = sort.order === 'asc' ? 'desc' : 'asc';
-      newState.beverages[id].list = _.orderBy(
-        newState.beverages[id].list,
-        [newState.beverages[id].sort.by],
-        [newState.beverages[id].sort.order]
-      );
+      selectedBeverages.sort.order = sort.order === 'asc' ? 'desc' : 'asc';
     } else {
-      newState.beverages[id].sort.by = sortBy;
-      newState.beverages[id].sort.order = 'asc';
-      newState.beverages[id].list = _.orderBy(
-        newState.beverages[id].list,
-        [newState.beverages[id].sort.by],
-        [newState.beverages[id].sort.order]
-      );
+      selectedBeverages.sort.by = sortBy;
+      selectedBeverages.sort.order = 'asc';
     }
+    selectedBeverages.list = _.orderBy(
+      selectedBeverages.list,
+      [selectedBeverages.sort.by],
+      [selectedBeverages.sort.order]
+    );
     this.setState(newState);
   };
 
@@ -155,12 +152,13 @@ class Home extends Component {
   };
 
   tabOnChangeHandler = async ({ id, query }) => {
-    const state = { ...this.state };
-    state.currentTab = id;
-    this.setState(state);
+    const newState = { ...this.state };
+    newState.currentTab = id;
+    this.setState(newState);
 
-    if (state.beverages[id].list.length === 0) {
-      this.loadSelectedBeverages({ id, query, state });
+    if (newState.beverages[id].list.length === 0) {
+      newState.beverages[id].query = query;
+      this.loadSelectedBeverages({ id, newState });
     }
   };
 
@@ -191,32 +189,7 @@ class Home extends Component {
           </Link>
 
           <NavBar />
-          <div className='tab-content pt-2'>
-            <TabPane
-              id='all'
-              component={() => (
-                <BeveragesSegment id='all' title='All Beverages' />
-              )}
-            />
-            <TabPane
-              id='pizza-pairable'
-              component={() => (
-                <BeveragesSegment
-                  id='pizza-pairable'
-                  title='Pizza Paired Beverages'
-                />
-              )}
-            />
-            <TabPane
-              id='steak-pairable'
-              component={() => (
-                <BeveragesSegment
-                  id='steak-pairable'
-                  title='Steak Paired Beverages'
-                />
-              )}
-            />
-          </div>
+          <TabContents />
 
           {/* {ReactDOM.createPortal(
             <BeverageInfoModal

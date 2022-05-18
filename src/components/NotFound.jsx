@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class NotFound extends Component {
-  state = {};
-  render() {
-    return <h2>Not Found</h2>;
-  }
-}
+import NavBar from './NavBar';
+
+const NotFound = () => {
+  return (
+    <>
+      <NavBar />
+      <h2>Not Found</h2>
+    </>
+  );
+};
 
 export default NotFound;

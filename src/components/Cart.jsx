@@ -22,7 +22,10 @@ class Cart extends Component {
         <div className={styles['beverages-segment']}>
           <h2>Cart ( {cart.length} )</h2>
           <h5 className='mb-4'>Total Price: ( {totalPrice} )</h5>
-          <div className={styles['beverages-container'] + ' mb-2'}>
+          <div
+            id='beverages-container'
+            className={styles['beverages-container'] + ' mb-2'}
+          >
             {!cart.length && <p className='mt-3'>No items added to the cart</p>}
             {cart.length > 0 &&
               cart.map(beverageInfo => (

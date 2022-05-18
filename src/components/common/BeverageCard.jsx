@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import LazyLoad from 'react-lazyload';
+
 import AppContext from '../../context/AppContext';
 
 import '../../../node_modules/bootstrap-icons-font/dist/bootstrap-icons-font.css';
@@ -10,9 +12,10 @@ class BeverageCard extends Component {
   static contextType = AppContext;
 
   render() {
-    const { beverageInfo } = this.props;
+    const { beverageInfo, scrollContainer } = this.props;
     const { name, image_url, tagline, abv } = beverageInfo;
     const { state, isItemAdded, showBeverageInfoModal } = this.context;
+
     return (
       <div
         className={styles['beverage-card'] + ' card'}
@@ -39,8 +42,18 @@ class BeverageCard extends Component {
           ></i>
         </div>
         <div className={styles['img-box'] + ' p-3'}>
-          <img src={image_url} className='' alt={name} />
+          <LazyLoad
+            height={170}
+            once
+            scrollContainer={scrollContainer}
+            // offset={20}
+            // debounce='throttle'
+            overflow={true}
+          >
+            <img src={image_url} alt={name} />
+          </LazyLoad>
         </div>
+
         <div className='card-body'>
           <h5 className={styles['card-title'] + ' mb-4'}>
             {name} <span className='small text-muted'>( {abv} )</span>

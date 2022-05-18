@@ -3,7 +3,6 @@
   grid-template-columns: repeat(4, calc(25% - 10px));
   gap: 10px;
   height: 370px;
-  overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;
 }

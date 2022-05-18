@@ -62,7 +62,10 @@ class BeveragesSegment extends Component {
             </button>
           </div>
         </div>
-        <div className={styles['beverages-container'] + ' mb-4'}>
+        <div
+          id={`beverages-container-${id}`}
+          className={styles['beverages-container'] + ' mb-4'}
+        >
           {isLoading && (
             <div
               className='d-flex align-items-center mt-4'
@@ -78,10 +81,13 @@ class BeveragesSegment extends Component {
           {!isLoading &&
             list.length !== 0 &&
             list.map(beverageInfo => (
-              <BeverageCard key={beverageInfo.id} beverageInfo={beverageInfo} />
+              <BeverageCard
+                key={beverageInfo.id}
+                beverageInfo={beverageInfo}
+                scrollContainer={`#beverages-container-${id}`}
+              />
             ))}
         </div>
-
         <Pagination id={id} />
       </div>
     );

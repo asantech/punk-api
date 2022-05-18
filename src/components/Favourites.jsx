@@ -17,7 +17,10 @@ class Favourites extends Component {
         <NavBar />
         <div className={styles['beverages-segment']}>
           <h2 className='mb-4'>Favourite beverages ( {favourites.length} )</h2>
-          <div className={styles['beverages-container'] + ' mb-2'}>
+          <div
+            id='beverages-container'
+            className={styles['beverages-container'] + ' mb-2'}
+          >
             {!favourites.length && (
               <p className='mt-3'>No favourite items found</p>
             )}

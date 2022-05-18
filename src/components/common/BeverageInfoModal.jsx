@@ -51,6 +51,7 @@ class BeverageInfoModal extends Component {
   render() {
     const { beverageInfo, appContext } = this.props;
     const { name, tagline, image_url, description, abv, srm } = beverageInfo;
+    const { isItemAdded, state } = appContext;
 
     return (
       <Modal
@@ -78,7 +79,7 @@ class BeverageInfoModal extends Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          {!appContext.isItemAdded(appContext.state.cart, beverageInfo) ? (
+          {!isItemAdded(state.cart, beverageInfo) ? (
             <button
               className='btn btn-success'
               onClick={this.addToCartBtnOnClickHandler}
@@ -93,10 +94,7 @@ class BeverageInfoModal extends Component {
               Remove from Cart
             </button>
           )}
-          {!appContext.isItemAdded(
-            appContext.state.favourites,
-            beverageInfo
-          ) ? (
+          {!isItemAdded(state.favourites, beverageInfo) ? (
             <button
               className='btn btn-primary'
               onClick={this.addToFavouritesBtnOnClickHandler}

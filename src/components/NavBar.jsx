@@ -6,10 +6,10 @@ class NavBar extends Component {
   render() {
     return (
       <nav className='navbar navbar-expand-lg navbar-light bg-light mb-3'>
-        <div class='container-fluid'>
-          <div class='collapse navbar-collapse' id='navbarNav'>
-            <ul class='navbar-nav'>
-              <li class='nav-item'>
+        <div className='container-fluid'>
+          <div className='collapse navbar-collapse' id='navbarNav'>
+            <ul className='navbar-nav'>
+              <li className='nav-item'>
                 <Link className='btn btn-primary' to='/'>
                   Back To Home
                 </Link>

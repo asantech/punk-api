@@ -11,7 +11,7 @@ class BeverageCard extends Component {
   static contextType = HomePageContext;
 
   render() {
-    const { name, image_url, tagline } = this.props.beverage;
+    const { name, image_url, tagline, abv } = this.props.beverage;
     return (
       <AppContext.Consumer>
         {appContext => {
@@ -46,7 +46,9 @@ class BeverageCard extends Component {
                 <img src={image_url} className='' alt={name} />
               </div>
               <div className='card-body'>
-                <h5 className={styles['card-title'] + ' mb-4'}>{name}</h5>
+                <h5 className={styles['card-title'] + ' mb-4'}>
+                  {name} <span className='small text-muted'>( {abv} )</span>
+                </h5>
                 <p className={styles['card-text']}>{tagline}</p>
               </div>
             </div>

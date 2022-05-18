@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { render } from '@testing-library/react';
+import _ from 'lodash';
 
 import AppContext from '../context/AppContext';
 import HomePageContext from '../context/HomePageContext';
@@ -24,6 +25,10 @@ class Home extends Component {
         query: {
           page: 1,
         },
+        sort: {
+          by: 'name',
+          order: 'asc',
+        },
         isLoading: false,
       },
       'pizza-pairable': {
@@ -32,6 +37,10 @@ class Home extends Component {
           page: 1,
           food: 'pizza',
         },
+        sort: {
+          by: 'name',
+          order: 'asc',
+        },
         isLoading: false,
       },
       'steak-pairable': {
@@ -39,6 +48,10 @@ class Home extends Component {
         query: {
           page: 1,
           food: 'steak',
+        },
+        sort: {
+          by: 'name',
+          order: 'asc',
         },
         isLoading: false,
       },
@@ -77,16 +90,21 @@ class Home extends Component {
       this.setState(state);
     }
     try {
-      const selectedBeverages = await this.getSelectedBeverages({
+      let selectedBeverages = await this.getSelectedBeverages({
         id,
         query,
       });
 
-      const beverages = { ...this.state.beverages };
+      const { beverages } = state;
+
+      selectedBeverages = _.orderBy(
+        selectedBeverages,
+        [beverages[id].sort.by],
+        [beverages[id].sort.order]
+      );
       beverages[id].list = selectedBeverages;
       beverages[id].query = query;
       beverages[id].isLoading = false;
-      state.beverages = beverages;
       toast.success('beverages are loaded successfully.');
     } catch (error) {
       toast.error(error.message);
@@ -95,7 +113,27 @@ class Home extends Component {
     this.setState(state);
   };
 
-  updateBeverages = newState => {
+  sortItems = ({ id, sortBy }) => {
+    const { sort } = this.state.beverages[id];
+
+    const newState = { ...this.state };
+
+    if (sort.by === sortBy) {
+      newState.beverages[id].sort.order = sort.order === 'asc' ? 'desc' : 'asc';
+      newState.beverages[id].list = _.orderBy(
+        newState.beverages[id].list,
+        [newState.beverages[id].sort.by],
+        [newState.beverages[id].sort.order]
+      );
+    } else {
+      newState.beverages[id].sort.by = sortBy;
+      newState.beverages[id].sort.order = 'asc';
+      newState.beverages[id].list = _.orderBy(
+        newState.beverages[id].list,
+        [newState.beverages[id].sort.by],
+        [newState.beverages[id].sort.order]
+      );
+    }
     this.setState(newState);
   };
 
@@ -133,8 +171,8 @@ class Home extends Component {
           state: this.state,
           tabOnChangeHandler: this.tabOnChangeHandler,
           showBeverageInfoModal: this.showBeverageInfoModal,
-          updateBeverages: this.updateBeverages,
           loadSelectedBeverages: this.loadSelectedBeverages,
+          sortItems: this.sortItems,
         }}
       >
         <>

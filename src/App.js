@@ -17,18 +17,46 @@ import './App.css';
 
 class App extends Component {
   state = {
-    cart: this.getStoredData(sessionStorage.getItem('cart')),
-    favourites: this.getStoredData(sessionStorage.getItem('favourites')),
+    cart: this.doesStorageKeyExist('cart') ? this.getStoredData('cart') : [],
+    favourites: this.doesStorageKeyExist('favourites')
+      ? this.getStoredData('favourites')
+      : [],
+  };
+
+  setDataToSessionStorage = (key, data, expirationDuration) => {
+    localStorage.setItem(
+      key,
+      JSON.stringify({
+        data,
+        expirationTime: new Date().getTime() + expirationDuration,
+      })
+    );
+  };
+
+  getStoredExpirationTime = storageKey => {
+    const storedVal = localStorage.getItem(storageKey);
+    return JSON.parse(storedVal).expirationTime;
+  };
+
+  getStoredData(storageKey) {
+    const storedVal = localStorage.getItem(storageKey);
+    return JSON.parse(storedVal).data;
+  }
+
+  doesStorageKeyExist(storageKey) {
+    return localStorage.getItem(storageKey) === null ? false : true;
+  }
+
+  isExpirationTimePassed = exiprationTime => {
+    return new Date().getTime() >= exiprationTime;
   };
 
   componentDidMount() {
     if (
-      sessionStorage.getItem('cart') === null ||
-      this.isExpirationTimePassed(
-        this.getStoredExpirationTime(sessionStorage.getItem('cart'))
-      )
+      !this.doesStorageKeyExist('cart') ||
+      this.isExpirationTimePassed(this.getStoredExpirationTime('cart'))
     )
-      sessionStorage.setItem(
+      localStorage.setItem(
         'cart',
         JSON.stringify({
           data: [],
@@ -37,12 +65,10 @@ class App extends Component {
       );
 
     if (
-      sessionStorage.getItem('favourites') === null ||
-      this.isExpirationTimePassed(
-        this.getStoredExpirationTime(sessionStorage.getItem('favourites'))
-      )
+      !this.doesStorageKeyExist('favourites') ||
+      this.isExpirationTimePassed(this.getStoredExpirationTime('favourites'))
     )
-      sessionStorage.setItem(
+      localStorage.setItem(
         'favourites',
         JSON.stringify({
           data: [],
@@ -89,28 +115,6 @@ class App extends Component {
     } else {
       toast.error(`This item is already deleted from ${collectionName}.`);
     }
-  };
-
-  setDataToSessionStorage = (key, data, expirationDuration) => {
-    sessionStorage.setItem(
-      key,
-      JSON.stringify({
-        data,
-        expirationTime: new Date().getTime() + expirationDuration,
-      })
-    );
-  };
-
-  getStoredExpirationTime = jsonStr => {
-    return JSON.parse(jsonStr).expirationTime;
-  };
-
-  getStoredData(jsonStr) {
-    return JSON.parse(jsonStr).data;
-  }
-
-  isExpirationTimePassed = exiprationTime => {
-    return new Date().getTime() >= exiprationTime;
   };
 
   render() {

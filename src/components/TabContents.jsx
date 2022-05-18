@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import NavItem from './common/NavItem';
 import TabPane from './common/TabPane';
 import BeveragesSegment from './common/BeveragesSegment';
 

@@ -1,0 +1,13 @@
+.desc-segment {
+  max-height: 1000px;
+  -webkit-transition: max-height 0.5s linear;
+  -moz-transition: max-height 0.5s linear;
+  -ms-transition: max-height 0.5s linear;
+  -o-transition: max-height 0.5s linear;
+  transition: max-height 0.5s linear;
+}
+
+.desc-segment.collapsed {
+  max-height: 100px;
+  overflow: hidden;
+}

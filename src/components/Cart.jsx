@@ -3,6 +3,8 @@ import _ from 'lodash';
 
 import AppContext from '../context/AppContext';
 
+import NavBar from './NavBar';
+
 import BeverageCard from './common/BeverageCard';
 import styles from '../components/common/BeveragesSegment.module.css';
 
@@ -15,17 +17,23 @@ class Cart extends Component {
       return item.srm;
     });
     return (
-      <div className={styles['beverages-segment']}>
-        <h2>Cart ( {cart.length} )</h2>
-        <h5 className='mb-4'>Total Price: ( {totalPrice} )</h5>
-        <div className={styles['beverages-container'] + ' mb-2'}>
-          {!cart.length && <p className='mt-3'>No items added to the cart</p>}
-          {cart.length > 0 &&
-            cart.map(beverageInfo => (
-              <BeverageCard key={beverageInfo.id} beverage={beverageInfo} />
-            ))}
+      <>
+        <NavBar />
+        <div className={styles['beverages-segment']}>
+          <h2>Cart ( {cart.length} )</h2>
+          <h5 className='mb-4'>Total Price: ( {totalPrice} )</h5>
+          <div className={styles['beverages-container'] + ' mb-2'}>
+            {!cart.length && <p className='mt-3'>No items added to the cart</p>}
+            {cart.length > 0 &&
+              cart.map(beverageInfo => (
+                <BeverageCard
+                  key={beverageInfo.id}
+                  beverageInfo={beverageInfo}
+                />
+              ))}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

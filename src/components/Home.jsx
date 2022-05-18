@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { render } from '@testing-library/react';
 import _ from 'lodash';
 
 import AppContext from '../context/AppContext';
@@ -10,9 +8,8 @@ import HomePageContext from '../context/HomePageContext';
 
 import * as beverageServices from '../services/beverageServices';
 
-import NavBar from '../components/NavBar';
+import TabsNavBar from './TabsNavBar';
 import TabContents from './TabContents';
-import BeverageInfoModal from '../components/common/BeverageInfoModal';
 
 class Home extends Component {
   static contextType = AppContext;
@@ -61,7 +58,6 @@ class Home extends Component {
   componentDidMount() {
     this.loadSelectedBeverages({
       id: 'all',
-      // query: { page: 1 },
       newState: this.state,
     });
   }
@@ -102,14 +98,15 @@ class Home extends Component {
         [beverages[id].sort.order]
       );
       beverages[id].list = selectedBeverages;
-      // beverages[id].query = query;
       beverages[id].isLoading = false;
       toast.success('beverages are loaded successfully.', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     } catch (error) {
-      toast.error(error.message);
       newState.beverages[id].isLoading = false;
+      toast.error(error.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     }
     this.setState(newState);
   };
@@ -134,23 +131,6 @@ class Home extends Component {
     this.setState(newState);
   };
 
-  showBeverageInfoModal = beverageInfo => {
-    // render(<BeverageInfoModal show={true} />);
-    render(
-      ReactDOM.createPortal(
-        <BeverageInfoModal
-          show={true}
-          beverageInfo={beverageInfo}
-          appContext={this.context}
-        />,
-        document.getElementById('overlay-root')
-      )
-    );
-    // const state = { ...this.state };
-    // state.modalDisplay = true;
-    // this.setState(state);
-  };
-
   tabOnChangeHandler = async ({ id, query }) => {
     const newState = { ...this.state };
     newState.currentTab = id;
@@ -163,12 +143,12 @@ class Home extends Component {
   };
 
   render() {
+    const { cart, favourites } = this.context.state;
     return (
       <HomePageContext.Provider
         value={{
           state: this.state,
           tabOnChangeHandler: this.tabOnChangeHandler,
-          showBeverageInfoModal: this.showBeverageInfoModal,
           loadSelectedBeverages: this.loadSelectedBeverages,
           sortItems: this.sortItems,
         }}
@@ -178,17 +158,17 @@ class Home extends Component {
             className='btn btn-success position-absolute start-0'
             to='/cart'
           >
-            Cart ( {this.context.state.cart.length} )
+            Cart ( {cart.length} )
           </Link>
           <Link
             className='btn btn-primary position-absolute'
             to='/favourites'
             style={{ left: '100px' }}
           >
-            Favourites ( {this.context.state.favourites.length} )
+            Favourites ( {favourites.length} )
           </Link>
 
-          <NavBar />
+          <TabsNavBar />
           <TabContents />
 
           {/* {ReactDOM.createPortal(

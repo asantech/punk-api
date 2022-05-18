@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 
-import NavItem from './common/NavItem';
+import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
   render() {
     return (
-      <ul
-        className='nav nav-tabs justify-content-center mb-2'
-        id='myTab'
-        role='tablist'
-      >
-        <NavItem id='all' lbl='All' />
-        <NavItem id='pizza-pairable' lbl='Pizza Pairable' />
-        <NavItem id='steak-pairable' lbl='Steak Pairable' />
-      </ul>
+      <nav className='navbar navbar-expand-lg navbar-light bg-light mb-3'>
+        <div class='container-fluid'>
+          <div class='collapse navbar-collapse' id='navbarNav'>
+            <ul class='navbar-nav'>
+              <li class='nav-item'>
+                <Link className='btn btn-primary' to='/'>
+                  Back To Home
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     );
   }
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import { render } from '@testing-library/react';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 
@@ -10,6 +12,8 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 import Cart from './components/Cart';
 import Favourites from './components/Favourites';
+
+import BeverageInfoModal from './components/common/BeverageInfoModal';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +25,7 @@ class App extends Component {
     favourites: this.doesStorageKeyExist('favourites')
       ? this.getStoredData('favourites')
       : [],
+    modalDisplay: false,
   };
 
   setDataToSessionStorage = (key, data, expirationDuration) => {
@@ -117,6 +122,25 @@ class App extends Component {
     }
   };
 
+  showBeverageInfoModal = beverageInfo => {
+    render(
+      ReactDOM.createPortal(
+        <BeverageInfoModal
+          show={true}
+          beverageInfo={beverageInfo}
+          appContext={{
+            // بعدا اصلاح شود
+            state: this.state,
+            isItemAdded: this.isItemAdded,
+            addToCollection: this.addToCollection,
+            removeFromCollection: this.removeFromCollection,
+          }}
+        />,
+        document.getElementById('overlay-root')
+      )
+    );
+  };
+
   render() {
     return (
       <AppContext.Provider
@@ -125,6 +149,7 @@ class App extends Component {
           isItemAdded: this.isItemAdded,
           addToCollection: this.addToCollection,
           removeFromCollection: this.removeFromCollection,
+          showBeverageInfoModal: this.showBeverageInfoModal,
         }}
       >
         <ToastContainer theme='colored' />

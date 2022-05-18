@@ -77,8 +77,8 @@ class BeveragesSegment extends Component {
           {!isLoading && list.length === 0 && <p>No beverages found.</p>}
           {!isLoading &&
             list.length !== 0 &&
-            list.map(beverage => (
-              <BeverageCard key={beverage.id} beverage={beverage} />
+            list.map(beverageInfo => (
+              <BeverageCard key={beverageInfo.id} beverageInfo={beverageInfo} />
             ))}
         </div>
 

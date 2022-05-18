@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap';
 
 import styles from './BeverageInfoModal.module.css';
 
+import DescriptionSegment from './DescriptionSegment';
+
 class BeverageInfoModal extends Component {
   // بعدا برای روش دسترسی مناسب تر به appcontext فکری شود
   state = {
@@ -70,9 +72,7 @@ class BeverageInfoModal extends Component {
           <div>
             <b>abv:</b> {abv}
           </div>
-          <div>
-            <b>description:</b> {description}
-          </div>
+          <DescriptionSegment description={description} />
           <div>
             <b>price:</b> {srm}
           </div>

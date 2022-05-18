@@ -46,16 +46,19 @@ const Pagination = props => {
         </li>
 
         {paginationBtnsLbls.length > 0 &&
-          paginationBtnsLbls.map((page, i) => {
+          paginationBtnsLbls.map((p, i) => {
             return (
-              <li key={i} className='page-item'>
+              <li
+                key={i}
+                className={'page-item' + (p === page ? ' active' : '')}
+              >
                 <button
                   className='page-link'
                   onClick={
-                    typeof page === 'number' ? () => goToPage(page) : undefined
+                    typeof p === 'number' ? () => goToPage(p) : undefined
                   }
                 >
-                  {page}
+                  {p}
                 </button>
               </li>
             );

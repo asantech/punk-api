@@ -17,7 +17,13 @@ class BeveragesSegment extends Component {
 
     return (
       <div className={styles['beverages-segment']}>
-        <h2 className='mb-4'>{title}</h2>
+        <div className='d-flex justify-content-between mb-4'>
+          <h2 className='mb-0'>{title}</h2>
+          <div>
+            <button className='btn btn-light mx-2'>Sort By Name</button>
+            <button className='btn btn-light'>Sort By ABV</button>
+          </div>
+        </div>
         <div className={styles['beverages-container'] + ' mb-2'}>
           {isLoading && (
             <div>

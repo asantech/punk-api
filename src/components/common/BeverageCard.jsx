@@ -14,12 +14,15 @@ class BeverageCard extends Component {
   render() {
     const { beverageInfo, scrollContainer } = this.props;
     const { name, image_url, tagline, abv } = beverageInfo;
-    const { state, isItemAdded, showBeverageInfoModal } = this.context;
+    const { state, isItemAdded, displayBeverageInfoModal, setCurrentBeverage } =
+      this.context;
 
     return (
       <div
         className={styles['beverage-card'] + ' card'}
-        onClick={() => showBeverageInfoModal(beverageInfo)}
+        onClick={() =>
+          displayBeverageInfoModal(setCurrentBeverage(beverageInfo), true)
+        }
       >
         <div className='d-flex justify-content-between'>
           <i
@@ -46,8 +49,6 @@ class BeverageCard extends Component {
             height={170}
             once
             scrollContainer={scrollContainer}
-            // offset={20}
-            // debounce='throttle'
             overflow={true}
           >
             <img src={image_url} alt={name} />

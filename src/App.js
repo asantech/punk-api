@@ -26,6 +26,7 @@ class App extends Component {
       ? this.getStoredData('favourites')
       : [],
     modalDisplay: false,
+    currentBeverage: {},
   };
 
   setDataToSessionStorage = (key, data, expirationDuration) => {
@@ -89,69 +90,59 @@ class App extends Component {
     return selectedItem.length ? true : false;
   };
 
-  addToCollection = (collectionName, item, expirationDuration) => {
+  setCurrentBeverage = beverageInfo => {
+    const newState = { ...this.state };
+    newState.currentBeverage = beverageInfo;
+    return newState;
+  };
+
+  addToCollection = (collectionName, item, newState, expirationDuration) => {
     if (!this.isItemAdded(this.state[collectionName], item)) {
-      const state = { ...this.state };
       let collection = [...this.state[collectionName]];
       collection.push(item);
-      state[collectionName] = collection;
-      this.setState(state);
-      toast.success(`The item got successfully added to ${collectionName}.`);
       this.setDataToSessionStorage(
         collectionName,
         collection,
         expirationDuration
       );
-    } else {
-      toast.error(`This item is already deleted from ${collectionName}.`);
-    }
-  };
-
-  removeFromCollection = (collectionName, item) => {
-    if (this.isItemAdded(this.state[collectionName], item)) {
-      const state = { ...this.state };
-      let collection = [...this.state[collectionName]];
-      collection = collection.filter(_item => _item.id !== item.id);
-      if (collection.length === 0)
-        this.setDataToSessionStorage(collectionName, [], 0);
-      state[collectionName] = collection;
-      this.setState(state);
+      newState[collectionName] = collection;
       toast.success(`The item got successfully added to ${collectionName}.`);
     } else {
       toast.error(`This item is already deleted from ${collectionName}.`);
     }
+    return newState;
   };
 
-  showBeverageInfoModal = beverageInfo => {
-    render(
-      ReactDOM.createPortal(
-        <BeverageInfoModal
-          show={true}
-          beverageInfo={beverageInfo}
-          appContext={{
-            // بعدا اصلاح شود
-            state: this.state,
-            isItemAdded: this.isItemAdded,
-            addToCollection: this.addToCollection,
-            removeFromCollection: this.removeFromCollection,
-          }}
-        />,
-        document.getElementById('overlay-root')
-      )
-    );
+  removeFromCollection = (collectionName, item, newState) => {
+    if (this.isItemAdded(this.state[collectionName], item)) {
+      let collection = [...this.state[collectionName]];
+      collection = collection.filter(_item => _item.id !== item.id);
+      if (collection.length === 0)
+        this.setDataToSessionStorage(collectionName, [], 0);
+      newState[collectionName] = collection;
+      toast.success(`The item got successfully added to ${collectionName}.`);
+    } else {
+      toast.error(`This item is already deleted from ${collectionName}.`);
+    }
+    return newState;
+  };
+
+  displayBeverageInfoModal = newState => {
+    newState.modalDisplay = !this.state.modalDisplay;
+    this.setState(newState);
   };
 
   render() {
+    const appContextVal = {
+      state: this.state,
+      isItemAdded: this.isItemAdded,
+      addToCollection: this.addToCollection,
+      removeFromCollection: this.removeFromCollection,
+      setCurrentBeverage: this.setCurrentBeverage,
+      displayBeverageInfoModal: this.displayBeverageInfoModal,
+    };
     return (
-      <AppContext.Provider
-        value={{
-          state: this.state,
-          isItemAdded: this.isItemAdded,
-          addToCollection: this.addToCollection,
-          removeFromCollection: this.removeFromCollection,
-          showBeverageInfoModal: this.showBeverageInfoModal,
-        }}
-      >
+      <AppContext.Provider value={appContextVal}>
         <ToastContainer theme='colored' />
         <div className='pt-4'>
           <main className='container position-relative p-0'>
@@ -164,6 +155,13 @@ class App extends Component {
             </Switch>
           </main>
         </div>
+        {
+          <BeverageInfoModal
+            show={this.state.modalDisplay}
+            beverageInfo={this.state.currentBeverage}
+            appContext={appContextVal} // بعدا اصلاح شود و از context گرفته شود
+          />
+        }
       </AppContext.Provider>
     );
   }

@@ -4,7 +4,10 @@ import styles from './DescriptionSegment.module.css';
 
 class DescriptionSegment extends Component {
   state = {
-    isCollapsed: this.props.description.length >= 250 ? true : false,
+    isCollapsed:
+      this.props.description && this.props.description.length >= 250
+        ? true
+        : false,
   };
 
   toggleCollapeHandler = () => {
@@ -25,7 +28,7 @@ class DescriptionSegment extends Component {
         >
           <b>description:</b> {description}
         </div>
-        {description.length >= 250 && (
+        {description && description.length >= 250 && (
           <div className='d-flex justify-content-center'>
             <button
               className='btn btn-sm btn-light'

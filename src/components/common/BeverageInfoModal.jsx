@@ -7,45 +7,60 @@ import DescriptionSegment from './DescriptionSegment';
 
 class BeverageInfoModal extends Component {
   // بعدا برای روش دسترسی مناسب تر به appcontext فکری شود
-  state = {
-    show: this.props.show,
-  };
 
-  handleClose = () => {
-    this.setState({
-      show: !this.state.show,
-    });
+  handleClose = newAppState => {
+    newAppState.modalDisplay = false;
+    newAppState.currentBeverage = {};
+    this.props.appContext.displayBeverageInfoModal(newAppState, false);
   };
 
   addToCartBtnOnClickHandler = () => {
-    this.props.appContext.addToCollection(
-      'cart',
-      this.props.beverageInfo,
-      7 * 86400
+    const newAppState = { ...this.props.appContext.state };
+
+    this.handleClose(
+      this.props.appContext.addToCollection(
+        'cart',
+        this.props.beverageInfo,
+        newAppState,
+        7 * 86400
+      )
     );
-    this.handleClose();
   };
 
   removeFromCartBtnOnClickHandler = () => {
-    this.props.appContext.removeFromCollection('cart', this.props.beverageInfo);
-    this.handleClose();
+    const newAppState = { ...this.props.appContext.state };
+
+    this.handleClose(
+      this.props.appContext.removeFromCollection(
+        'cart',
+        this.props.beverageInfo,
+        newAppState
+      )
+    );
   };
 
   addToFavouritesBtnOnClickHandler = () => {
-    this.props.appContext.addToCollection(
-      'favourites',
-      this.props.beverageInfo,
-      30 * 86400
+    const newAppState = { ...this.props.appContext.state };
+    this.handleClose(
+      this.props.appContext.addToCollection(
+        'favourites',
+        this.props.beverageInfo,
+        newAppState,
+        30 * 86400
+      )
     );
-    this.handleClose();
   };
 
   removeFromFavouritesBtnOnClickHandler = () => {
-    this.props.appContext.removeFromCollection(
-      'favourites',
-      this.props.beverageInfo
+    const newAppState = { ...this.props.appContext.state };
+
+    this.handleClose(
+      this.props.appContext.removeFromCollection(
+        'favourites',
+        this.props.beverageInfo,
+        newAppState
+      )
     );
-    this.handleClose();
   };
 
   render() {
@@ -56,8 +71,9 @@ class BeverageInfoModal extends Component {
     return (
       <Modal
         bsPrefix={styles['beverage-info-modal'] + ' modal'}
-        show={this.state.show}
-        onHide={this.handleClose}
+        show={this.props.show}
+        onHide={() => this.handleClose({ ...this.props.appContext.state })}
+        container={document.getElementById('overlay-root')}
       >
         <Modal.Header>
           {' '}

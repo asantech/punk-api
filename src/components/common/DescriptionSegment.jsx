@@ -29,7 +29,7 @@ class DescriptionSegment extends Component {
           <b>description:</b> {description}
         </div>
         {description && description.length >= 250 && (
-          <div className='d-flex justify-content-center'>
+          <div className='d-flex justify-content-center mt-1'>
             <button
               className='btn btn-sm btn-light'
               onClick={this.toggleCollapeHandler}

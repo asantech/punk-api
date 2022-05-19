@@ -23,7 +23,7 @@ class Cart extends Component {
           <h2>Cart ( {cart.length} )</h2>
           <h5 className='mb-4'>Total Price: ( {totalPrice} )</h5>
           <div
-            id='beverages-container'
+            id='cart-page-beverages-container'
             className={styles['beverages-container'] + ' mb-2'}
           >
             {!cart.length && <p className='mt-3'>No items added to the cart</p>}
@@ -32,6 +32,7 @@ class Cart extends Component {
                 <BeverageCard
                   key={beverageInfo.id}
                   beverageInfo={beverageInfo}
+                  scrollContainer={'#cart-page-beverages-container'}
                 />
               ))}
           </div>

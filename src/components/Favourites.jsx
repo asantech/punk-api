@@ -18,7 +18,7 @@ class Favourites extends Component {
         <div className={styles['beverages-segment']}>
           <h2 className='mb-4'>Favourite beverages ( {favourites.length} )</h2>
           <div
-            id='beverages-container'
+            id='favourites-page-beverages-container'
             className={styles['beverages-container'] + ' mb-2'}
           >
             {!favourites.length && (
@@ -29,6 +29,7 @@ class Favourites extends Component {
                 <BeverageCard
                   key={beverageInfo.id}
                   beverageInfo={beverageInfo}
+                  scrollContainer={'#favourites-page-beverages-container'}
                 />
               ))}
           </div>

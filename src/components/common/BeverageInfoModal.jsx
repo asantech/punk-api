@@ -22,7 +22,7 @@ class BeverageInfoModal extends Component {
         'cart',
         this.props.beverageInfo,
         newAppState,
-        7 * 86400
+        7 //* 86400
       )
     );
   };
@@ -46,7 +46,7 @@ class BeverageInfoModal extends Component {
         'favourites',
         this.props.beverageInfo,
         newAppState,
-        30 * 86400
+        30 //* 86400
       )
     );
   };

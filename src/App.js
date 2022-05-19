@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-import { render } from '@testing-library/react';
 import { ToastContainer, toast } from 'react-toastify';
 import _ from 'lodash';
 
@@ -17,24 +15,21 @@ import BeverageInfoModal from './components/common/BeverageInfoModal';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
 
 class App extends Component {
   state = {
-    cart: this.doesStorageKeyExist('cart') ? this.getStoredData('cart') : [],
-    favourites: this.doesStorageKeyExist('favourites')
-      ? this.getStoredData('favourites')
-      : [],
+    cart: [],
+    favourites: [],
     modalDisplay: false,
     currentBeverage: {},
   };
 
-  setDataToSessionStorage = (key, data, expirationDuration) => {
+  setDataToStorage = (key, data, expirationDuration) => {
     localStorage.setItem(
       key,
       JSON.stringify({
         data,
-        expirationTime: new Date().getTime() + expirationDuration,
+        expirationTime: new Date().getTime() + expirationDuration * 1000,
       })
     );
   };
@@ -58,29 +53,29 @@ class App extends Component {
   };
 
   componentDidMount() {
+    let hasStoredData = false;
+    const newState = { ...this.state };
     if (
       !this.doesStorageKeyExist('cart') ||
       this.isExpirationTimePassed(this.getStoredExpirationTime('cart'))
-    )
-      localStorage.setItem(
-        'cart',
-        JSON.stringify({
-          data: [],
-          expirationTime: 0,
-        })
-      );
+    ) {
+      this.setDataToStorage('cart', [], 0);
+    } else {
+      newState['cart'] = this.getStoredData('cart');
+      hasStoredData = true;
+    }
 
     if (
       !this.doesStorageKeyExist('favourites') ||
       this.isExpirationTimePassed(this.getStoredExpirationTime('favourites'))
-    )
-      localStorage.setItem(
-        'favourites',
-        JSON.stringify({
-          data: [],
-          expirationTime: 0,
-        })
-      );
+    ) {
+      this.setDataToStorage('favourites', [], 0);
+    } else {
+      newState['favourites'] = this.getStoredData('favourites');
+      hasStoredData = true;
+    }
+
+    if (hasStoredData) this.setState(newState);
   }
 
   isItemAdded = (collection, beverageInfo) => {
@@ -100,15 +95,15 @@ class App extends Component {
     if (!this.isItemAdded(this.state[collectionName], item)) {
       let collection = [...this.state[collectionName]];
       collection.push(item);
-      this.setDataToSessionStorage(
-        collectionName,
-        collection,
-        expirationDuration
-      );
+      this.setDataToStorage(collectionName, collection, expirationDuration);
       newState[collectionName] = collection;
-      toast.success(`The item got successfully added to ${collectionName}.`);
+      toast.success(`The item got successfully added to ${collectionName}.`, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     } else {
-      toast.error(`This item is already deleted from ${collectionName}.`);
+      toast.error(`This item is already added to ${collectionName}.`, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     }
     return newState;
   };
@@ -117,12 +112,18 @@ class App extends Component {
     if (this.isItemAdded(this.state[collectionName], item)) {
       let collection = [...this.state[collectionName]];
       collection = collection.filter(_item => _item.id !== item.id);
-      if (collection.length === 0)
-        this.setDataToSessionStorage(collectionName, [], 0);
+      if (collection.length === 0) this.setDataToStorage(collectionName, [], 0);
       newState[collectionName] = collection;
-      toast.success(`The item got successfully added to ${collectionName}.`);
+      toast.success(
+        `The item got successfully removed from ${collectionName}.`,
+        {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        }
+      );
     } else {
-      toast.error(`This item is already deleted from ${collectionName}.`);
+      toast.error(`This item is already removed from ${collectionName}.`, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     }
     return newState;
   };
@@ -141,6 +142,30 @@ class App extends Component {
       setCurrentBeverage: this.setCurrentBeverage,
       displayBeverageInfoModal: this.displayBeverageInfoModal,
     };
+
+    // console.log(
+    //   'cart',
+    //   !this.doesStorageKeyExist('cart') ||
+    //     this.isExpirationTimePassed(this.getStoredExpirationTime('cart'))
+    // );
+    // console.log(
+    //   'favourites',
+    //   !this.doesStorageKeyExist('favourites') ||
+    //     this.isExpirationTimePassed(this.getStoredExpirationTime('favourites'))
+    // );
+
+    // if (
+    //   !this.doesStorageKeyExist('cart') ||
+    //   this.isExpirationTimePassed(this.getStoredExpirationTime('cart'))
+    // )
+    //   this.setDataToStorage('cart', [], 0);
+
+    // if (
+    //   !this.doesStorageKeyExist('favourites') ||
+    //   this.isExpirationTimePassed(this.getStoredExpirationTime('favourites'))
+    // )
+    //   this.setDataToStorage('favourites', [], 0);
+
     return (
       <AppContext.Provider value={appContextVal}>
         <ToastContainer theme='colored' />

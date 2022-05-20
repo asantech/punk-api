@@ -12,6 +12,7 @@ const Pagination = props => {
   const pages = _.range(1, page + 1);
   let paginationBtnsLbls;
 
+  // مکانش بررسی شود
   if (pages.length <= 5) {
     paginationBtnsLbls = pages;
   } else {

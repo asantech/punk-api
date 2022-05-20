@@ -33,7 +33,7 @@ class BeveragesSegment extends Component {
               onClick={() => this.handleSort('name')}
             >
               Sort By Name
-              {sort.by === 'name' && (
+              {sort.by === 'name' && ( // جابجا شود
                 <i
                   className={
                     'bi mx-1' +
@@ -49,7 +49,7 @@ class BeveragesSegment extends Component {
               onClick={() => this.handleSort('abv')}
             >
               Sort By ABV
-              {sort.by === 'abv' && (
+              {sort.by === 'abv' && ( // جابجا شود
                 <i
                   className={
                     'bi mx-1' +

@@ -170,14 +170,6 @@ class Home extends Component {
 
           <TabsNavBar />
           <TabContents />
-
-          {/* {ReactDOM.createPortal(
-            <BeverageInfoModal
-              show={this.state.modalDisplay}
-              beverageInfo={{}}
-            />,
-            document.getElementById('overlay-root')
-          )} */}
         </>
       </HomePageContext.Provider>
     );

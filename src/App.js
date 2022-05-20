@@ -29,7 +29,7 @@ class App extends Component {
       key,
       JSON.stringify({
         data,
-        expirationTime: new Date().getTime() + expirationDuration * 1000,
+        expirationTime: _.now() + expirationDuration * 1000,
       })
     );
   };
@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   isExpirationTimePassed = exiprationTime => {
-    return new Date().getTime() >= exiprationTime;
+    return _.now() >= exiprationTime;
   };
 
   componentDidMount() {
@@ -142,29 +142,6 @@ class App extends Component {
       setCurrentBeverage: this.setCurrentBeverage,
       displayBeverageInfoModal: this.displayBeverageInfoModal,
     };
-
-    // console.log(
-    //   'cart',
-    //   !this.doesStorageKeyExist('cart') ||
-    //     this.isExpirationTimePassed(this.getStoredExpirationTime('cart'))
-    // );
-    // console.log(
-    //   'favourites',
-    //   !this.doesStorageKeyExist('favourites') ||
-    //     this.isExpirationTimePassed(this.getStoredExpirationTime('favourites'))
-    // );
-
-    // if (
-    //   !this.doesStorageKeyExist('cart') ||
-    //   this.isExpirationTimePassed(this.getStoredExpirationTime('cart'))
-    // )
-    //   this.setDataToStorage('cart', [], 0);
-
-    // if (
-    //   !this.doesStorageKeyExist('favourites') ||
-    //   this.isExpirationTimePassed(this.getStoredExpirationTime('favourites'))
-    // )
-    //   this.setDataToStorage('favourites', [], 0);
 
     return (
       <AppContext.Provider value={appContextVal}>

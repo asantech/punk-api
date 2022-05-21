@@ -8,7 +8,7 @@
 }
 
 .beverage-card .img-box img {
-  max-height: 170px;
+  max-height: 100%;
 }
 
 .beverage-card .card-title,

@@ -5,25 +5,26 @@ import styles from './BeverageInfoModal.module.css';
 
 import DescriptionSegment from './DescriptionSegment';
 
+import AppContext from '../../context/AppContext';
+
 import * as collectionServices from '../../services/collectionServices';
 
 class BeverageInfoModal extends Component {
-  // بعدا برای روش دسترسی مناسب تر به appcontext فکری شود
-
+  static contextType = AppContext;
   handleClose = newAppState => {
     newAppState.modalDisplay = false;
     newAppState.currentBeverage = {};
-    this.props.appContext.displayBeverageInfoModal(newAppState, false);
+    this.context.displayBeverageInfoModal(newAppState, false);
   };
 
   addToCartBtnOnClickHandler = () => {
-    const newAppState = { ...this.props.appContext.state };
+    const newAppState = { ...this.context.state };
 
     this.handleClose(
       collectionServices.addToCollection(
         'cart',
         this.props.beverageInfo,
-        this.props.appContext.state,
+        this.context.state,
         newAppState,
         7 //* 86400
       )
@@ -31,25 +32,25 @@ class BeverageInfoModal extends Component {
   };
 
   removeFromCartBtnOnClickHandler = () => {
-    const newAppState = { ...this.props.appContext.state };
+    const newAppState = { ...this.context.state };
 
     this.handleClose(
       collectionServices.removeFromCollection(
         'cart',
         this.props.beverageInfo,
-        this.props.appContext.state,
+        this.context.state,
         newAppState
       )
     );
   };
 
   addToFavouritesBtnOnClickHandler = () => {
-    const newAppState = { ...this.props.appContext.state };
+    const newAppState = { ...this.context.state };
     this.handleClose(
       collectionServices.addToCollection(
         'favourites',
         this.props.beverageInfo,
-        this.props.appContext.state,
+        this.context.state,
         newAppState,
         30 //* 86400
       )
@@ -57,28 +58,28 @@ class BeverageInfoModal extends Component {
   };
 
   removeFromFavouritesBtnOnClickHandler = () => {
-    const newAppState = { ...this.props.appContext.state };
+    const newAppState = { ...this.context.state };
 
     this.handleClose(
       collectionServices.removeFromCollection(
         'favourites',
         this.props.beverageInfo,
-        this.props.appContext.state,
+        this.context.state,
         newAppState
       )
     );
   };
 
   render() {
-    const { beverageInfo, appContext } = this.props;
+    const { beverageInfo } = this.props;
     const { name, tagline, image_url, description, abv, srm } = beverageInfo;
-    const { state } = appContext;
+    const { state } = this.context;
 
     return (
       <Modal
         bsPrefix={styles['beverage-info-modal'] + ' modal'}
         show={this.props.show}
-        onHide={() => this.handleClose({ ...this.props.appContext.state })}
+        onHide={() => this.handleClose({ ...this.context.state })}
         container={document.getElementById('overlay-root')}
       >
         <Modal.Header>

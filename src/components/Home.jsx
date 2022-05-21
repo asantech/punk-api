@@ -62,31 +62,13 @@ class Home extends Component {
     });
   }
 
-  convertQueryObjToStr(query) {
-    let queryStr = '';
-    for (let i in query) {
-      if (queryStr !== '') queryStr += '&';
-      queryStr += i + '=' + query[i];
-    }
-    return queryStr;
-  }
-
-  getSelectedBeverages = async ({ id, query }) => {
-    const queryStr = this.convertQueryObjToStr(query);
-    const selectedBeverages = await beverageServices.getBeverages(
-      queryStr ?? ''
-    );
-    return selectedBeverages;
-  };
-
   loadSelectedBeverages = async ({ id, newState }) => {
     if (newState.beverages[id].isLoading === false) {
       newState.beverages[id].isLoading = true;
       this.setState(newState);
     }
     try {
-      let selectedBeverages = await this.getSelectedBeverages({
-        id,
+      let selectedBeverages = await beverageServices.getSelectedBeverages({
         query: newState.beverages[id].query,
       });
 
@@ -99,9 +81,10 @@ class Home extends Component {
       );
       beverages[id].list = selectedBeverages;
       beverages[id].isLoading = false;
-      toast.success('beverages are loaded successfully.', {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      if (beverages[id].list.length)
+        toast.success('beverages are loaded successfully.', {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
     } catch (error) {
       newState.beverages[id].isLoading = false;
       toast.error(error.message, {

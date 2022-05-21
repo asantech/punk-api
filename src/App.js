@@ -8,9 +8,9 @@ import * as storageServices from './services/storageServices';
 import AppContext from './context/AppContext';
 
 import Home from './components/Home';
-import NotFound from './components/NotFound';
 import Cart from './components/Cart';
 import Favourites from './components/Favourites';
+import NotFound from './components/NotFound';
 
 import BeverageInfoModal from './components/common/BeverageInfoModal';
 
@@ -36,12 +36,6 @@ class App extends Component {
     this.setState(newState);
   }
 
-  setCurrentBeverage = beverageInfo => {
-    const newState = { ...this.state };
-    newState.currentBeverage = beverageInfo;
-    return newState;
-  };
-
   displayBeverageInfoModal = newState => {
     newState.modalDisplay = !this.state.modalDisplay;
     this.setState(newState);
@@ -50,7 +44,6 @@ class App extends Component {
   render() {
     const appContextVal = {
       state: this.state,
-      setCurrentBeverage: this.setCurrentBeverage,
       displayBeverageInfoModal: this.displayBeverageInfoModal,
     };
 
@@ -72,7 +65,6 @@ class App extends Component {
           <BeverageInfoModal
             show={this.state.modalDisplay}
             beverageInfo={this.state.currentBeverage}
-            appContext={appContextVal} // بعدا اصلاح شود و از context گرفته شود
           />
         }
       </AppContext.Provider>

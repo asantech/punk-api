@@ -1,5 +1,8 @@
 import Axios from 'axios';
 
+import * as beverageServices from '../services/beverageServices';
+import * as generalServices from '../services/generalServices';
+
 Axios.interceptors.response.use(null, error => {
   const expectedError =
     error.response &&
@@ -21,4 +24,16 @@ export async function getBeverages(queryStr) {
     baseURL + '/beers' + (queryStr ? '?' + queryStr : '')
   );
   return beverages;
+}
+
+export async function getSelectedBeverages({ query }) {
+  const queryStr = generalServices.convertQueryObjToStr(query);
+  const selectedBeverages = await beverageServices.getBeverages(queryStr ?? '');
+  return selectedBeverages;
+}
+
+export function setCurrentBeverage(state, beverageInfo) {
+  const newState = { ...state };
+  newState.currentBeverage = beverageInfo;
+  return newState;
 }

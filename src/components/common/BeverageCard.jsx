@@ -8,13 +8,15 @@ import '../../../node_modules/bootstrap-icons-font/dist/bootstrap-icons-font.css
 
 import styles from './BeverageCard.module.css';
 
+import * as collectionServices from '../../services/collectionServices';
+
 class BeverageCard extends Component {
   static contextType = AppContext;
 
   render() {
     const { beverageInfo, scrollContainer } = this.props;
     const { name, image_url, tagline, abv } = beverageInfo;
-    const { state, isItemAdded, displayBeverageInfoModal, setCurrentBeverage } =
+    const { state, displayBeverageInfoModal, setCurrentBeverage } =
       this.context;
 
     return (
@@ -28,7 +30,7 @@ class BeverageCard extends Component {
           <i
             className={
               'bi mt-2 mx-2' +
-              (!isItemAdded(state.cart, beverageInfo)
+              (!collectionServices.isItemAdded(state.cart, beverageInfo)
                 ? ' bi-cart'
                 : ' bi-cart-plus-fill')
             }
@@ -37,7 +39,7 @@ class BeverageCard extends Component {
           <i
             className={
               'bi mt-2 mx-2' +
-              (!isItemAdded(state.favourites, beverageInfo)
+              (!collectionServices.isItemAdded(state.favourites, beverageInfo)
                 ? ' bi-star'
                 : ' bi-star-fill')
             }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 
 import HomePageContext from '../../context/HomePageContext';
+
+import SortArrowIcon from './SortArrowIcon';
 
 import BeverageCard from './BeverageCard';
 import Pagination from './Pagination';
@@ -23,6 +24,14 @@ class BeveragesSegment extends Component {
     const beverages = this.context.state.beverages[id];
     const { list, isLoading, sort } = beverages;
 
+    const sortByNameArrowicon = sort.by === 'name' && (
+      <SortArrowIcon sort={sort} />
+    );
+
+    const sortByABVArrowIcon = sort.by === 'abv' && (
+      <SortArrowIcon sort={sort} />
+    );
+
     return (
       <div className={styles['beverages-segment']}>
         <div className='d-flex justify-content-between mb-4'>
@@ -33,32 +42,14 @@ class BeveragesSegment extends Component {
               onClick={() => this.handleSort('name')}
             >
               Sort By Name
-              {sort.by === 'name' && ( // جابجا شود
-                <i
-                  className={
-                    'bi mx-1' +
-                    (sort.order === 'asc'
-                      ? ' bi-caret-up-fill'
-                      : ' bi-caret-down-fill')
-                  }
-                ></i>
-              )}
+              {sortByNameArrowicon}
             </button>
             <button
               className='btn btn-light'
               onClick={() => this.handleSort('abv')}
             >
               Sort By ABV
-              {sort.by === 'abv' && ( // جابجا شود
-                <i
-                  className={
-                    'bi mx-1' +
-                    (sort.order === 'asc'
-                      ? ' bi-caret-up-fill'
-                      : ' bi-caret-down-fill')
-                  }
-                ></i>
-              )}
+              {sortByABVArrowIcon}
             </button>
           </div>
         </div>

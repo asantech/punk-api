@@ -5,6 +5,8 @@ import styles from './BeverageInfoModal.module.css';
 
 import DescriptionSegment from './DescriptionSegment';
 
+import * as collectionServices from '../../services/collectionServices';
+
 class BeverageInfoModal extends Component {
   // بعدا برای روش دسترسی مناسب تر به appcontext فکری شود
 
@@ -18,11 +20,12 @@ class BeverageInfoModal extends Component {
     const newAppState = { ...this.props.appContext.state };
 
     this.handleClose(
-      this.props.appContext.addToCollection(
+      collectionServices.addToCollection(
         'cart',
         this.props.beverageInfo,
+        this.props.appContext.state,
         newAppState,
-        7 * 86400
+        7 //* 86400
       )
     );
   };
@@ -31,9 +34,10 @@ class BeverageInfoModal extends Component {
     const newAppState = { ...this.props.appContext.state };
 
     this.handleClose(
-      this.props.appContext.removeFromCollection(
+      collectionServices.removeFromCollection(
         'cart',
         this.props.beverageInfo,
+        this.props.appContext.state,
         newAppState
       )
     );
@@ -42,11 +46,12 @@ class BeverageInfoModal extends Component {
   addToFavouritesBtnOnClickHandler = () => {
     const newAppState = { ...this.props.appContext.state };
     this.handleClose(
-      this.props.appContext.addToCollection(
+      collectionServices.addToCollection(
         'favourites',
         this.props.beverageInfo,
+        this.props.appContext.state,
         newAppState,
-        30 * 86400
+        30 //* 86400
       )
     );
   };
@@ -55,9 +60,10 @@ class BeverageInfoModal extends Component {
     const newAppState = { ...this.props.appContext.state };
 
     this.handleClose(
-      this.props.appContext.removeFromCollection(
+      collectionServices.removeFromCollection(
         'favourites',
         this.props.beverageInfo,
+        this.props.appContext.state,
         newAppState
       )
     );
@@ -66,7 +72,7 @@ class BeverageInfoModal extends Component {
   render() {
     const { beverageInfo, appContext } = this.props;
     const { name, tagline, image_url, description, abv, srm } = beverageInfo;
-    const { isItemAdded, state } = appContext;
+    const { state } = appContext;
 
     return (
       <Modal
@@ -95,7 +101,7 @@ class BeverageInfoModal extends Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          {!isItemAdded(state.cart, beverageInfo) ? (
+          {!collectionServices.isItemAdded(state.cart, beverageInfo) ? (
             <button
               className='btn btn-success'
               onClick={this.addToCartBtnOnClickHandler}
@@ -110,7 +116,7 @@ class BeverageInfoModal extends Component {
               Remove from Cart
             </button>
           )}
-          {!isItemAdded(state.favourites, beverageInfo) ? (
+          {!collectionServices.isItemAdded(state.favourites, beverageInfo) ? (
             <button
               className='btn btn-primary'
               onClick={this.addToFavouritesBtnOnClickHandler}

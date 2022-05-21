@@ -9,7 +9,7 @@ import styles from '../components/common/BeveragesSegment.module.css';
 
 class Favourites extends Component {
   static contextType = AppContext;
-  state = {};
+
   render() {
     const { favourites } = this.context.state;
     return (

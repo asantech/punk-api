@@ -10,7 +10,6 @@ import styles from '../components/common/BeveragesSegment.module.css';
 
 class Cart extends Component {
   static contextType = AppContext;
-  state = {};
   render() {
     const { cart } = this.context.state;
     const totalPrice = _.sumBy(cart, function (item) {

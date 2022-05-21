@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import _ from 'lodash';
+import { ToastContainer } from 'react-toastify';
+
+import * as storageServices from './services/storageServices';
 
 import AppContext from './context/AppContext';
 
@@ -24,107 +25,20 @@ class App extends Component {
     currentBeverage: {},
   };
 
-  setDataToStorage = (key, data, expirationDuration) => {
-    localStorage.setItem(
-      key,
-      JSON.stringify({
-        data,
-        expirationTime: _.now() + expirationDuration * 1000,
-      })
-    );
-  };
-
-  getStoredExpirationTime = storageKey => {
-    const storedVal = localStorage.getItem(storageKey);
-    return JSON.parse(storedVal).expirationTime;
-  };
-
-  getStoredData(storageKey) {
-    const storedVal = localStorage.getItem(storageKey);
-    return JSON.parse(storedVal).data;
-  }
-
-  doesStorageKeyExist(storageKey) {
-    return localStorage.getItem(storageKey) === null ? false : true;
-  }
-
-  isExpirationTimePassed = exiprationTime => {
-    return _.now() >= exiprationTime;
-  };
-
   componentDidMount() {
-    let hasStoredData = false;
     const newState = { ...this.state };
-    if (
-      !this.doesStorageKeyExist('cart') ||
-      this.isExpirationTimePassed(this.getStoredExpirationTime('cart'))
-    ) {
-      this.setDataToStorage('cart', [], 0);
-    } else {
-      newState['cart'] = this.getStoredData('cart');
-      hasStoredData = true;
-    }
+    storageServices.initializeStorage('cart');
+    storageServices.initializeStorage('favourites');
 
-    if (
-      !this.doesStorageKeyExist('favourites') ||
-      this.isExpirationTimePassed(this.getStoredExpirationTime('favourites'))
-    ) {
-      this.setDataToStorage('favourites', [], 0);
-    } else {
-      newState['favourites'] = this.getStoredData('favourites');
-      hasStoredData = true;
-    }
+    newState['cart'] = storageServices.getStoredData('cart');
+    newState['favourites'] = storageServices.getStoredData('favourites');
 
-    if (hasStoredData) this.setState(newState);
+    this.setState(newState);
   }
-
-  isItemAdded = (collection, beverageInfo) => {
-    const selectedItem = _.filter(collection, function (item) {
-      return item.id === beverageInfo.id;
-    });
-    return selectedItem.length ? true : false;
-  };
 
   setCurrentBeverage = beverageInfo => {
     const newState = { ...this.state };
     newState.currentBeverage = beverageInfo;
-    return newState;
-  };
-
-  addToCollection = (collectionName, item, newState, expirationDuration) => {
-    if (!this.isItemAdded(this.state[collectionName], item)) {
-      let collection = [...this.state[collectionName]];
-      collection.push(item);
-      this.setDataToStorage(collectionName, collection, expirationDuration);
-      newState[collectionName] = collection;
-      toast.success(`The item got successfully added to ${collectionName}.`, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    } else {
-      toast.error(`This item is already added to ${collectionName}.`, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    }
-    return newState;
-  };
-
-  removeFromCollection = (collectionName, item, newState) => {
-    if (this.isItemAdded(this.state[collectionName], item)) {
-      let collection = [...this.state[collectionName]];
-      collection = collection.filter(_item => _item.id !== item.id);
-      if (collection.length === 0) this.setDataToStorage(collectionName, [], 0);
-      newState[collectionName] = collection;
-      toast.success(
-        `The item got successfully removed from ${collectionName}.`,
-        {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        }
-      );
-    } else {
-      toast.error(`This item is already removed from ${collectionName}.`, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    }
     return newState;
   };
 
@@ -136,9 +50,6 @@ class App extends Component {
   render() {
     const appContextVal = {
       state: this.state,
-      isItemAdded: this.isItemAdded,
-      addToCollection: this.addToCollection,
-      removeFromCollection: this.removeFromCollection,
       setCurrentBeverage: this.setCurrentBeverage,
       displayBeverageInfoModal: this.displayBeverageInfoModal,
     };

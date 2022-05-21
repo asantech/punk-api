@@ -26,7 +26,7 @@ class BeverageInfoModal extends Component {
         this.props.beverageInfo,
         this.context.state,
         newAppState,
-        7 //* 86400
+        7 * 86400
       )
     );
   };
@@ -52,7 +52,7 @@ class BeverageInfoModal extends Component {
         this.props.beverageInfo,
         this.context.state,
         newAppState,
-        30 //* 86400
+        30 * 86400
       )
     );
   };

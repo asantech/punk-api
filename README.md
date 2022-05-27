@@ -1,3 +1,3 @@
-# A Beverage shop created by React JS
+# A Beverage shop created by React JS + Redux
 
-Class based components, statless function based components, and Context API used.
+Class based components, statless function based components, and Redux used.

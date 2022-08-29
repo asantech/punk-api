@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import HomePageContext from '../../context/HomePageContext';
+import HomePageContext from '../../../context/HomePageContext';
 
-import SortArrowIcon from './SortArrowIcon';
+import SortArrowIcon from '../Icons/SortArrowIcon';
 
-import BeverageCard from './BeverageCard';
-import Pagination from './Pagination';
+import BeverageCard from '../Cards/BeverageCard';
+import Pagination from '../../layout/navigation/Pagination/Pagination';
 
-import Spinner from './Spinner';
+import Spinner from '../Loaders/Spinner';
 
 import styles from './BeveragesSegment.module.css';
 

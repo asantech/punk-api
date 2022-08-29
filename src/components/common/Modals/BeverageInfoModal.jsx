@@ -3,11 +3,11 @@ import { Modal } from 'react-bootstrap';
 
 import styles from './BeverageInfoModal.module.css';
 
-import DescriptionSegment from './DescriptionSegment';
+import DescriptionSegment from '../Segments/DescriptionSegment';
 
-import AppContext from '../../context/AppContext';
+import AppContext from '../../../context/AppContext';
 
-import * as collectionServices from '../../services/collectionServices';
+import * as collectionServices from '../../../services/collectionServices';
 
 class BeverageInfoModal extends Component {
   static contextType = AppContext;

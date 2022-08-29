@@ -13,7 +13,7 @@ Axios.interceptors.response.use(null, error => {
 
   if (!expectedError) {
     console.log('unexpected error', error);
-    alert('unexpected error has occured, it is logged in the console.');
+    alert('unexpected error has occured, it is logged in the console.'); //todo: use toast error
   }
 
   return Promise.reject(error);

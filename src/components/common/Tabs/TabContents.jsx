@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import TabPane from './common/TabPane';
-import BeveragesSegment from './common/BeveragesSegment';
+import TabPane from './TabPane';
+import BeveragesSegment from '../Segments/BeveragesSegment';
 
 class TabContents extends Component {
   render() {

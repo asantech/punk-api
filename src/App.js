@@ -7,12 +7,12 @@ import * as storageServices from './services/storageServices';
 
 import AppContext from './context/AppContext';
 
-import Home from './components/Home';
-import Cart from './components/Cart';
-import Favourites from './components/Favourites';
-import NotFound from './components/NotFound';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
+import Favorites from './pages/Favorites';
+import NotFound from './pages/NotFound';
 
-import BeverageInfoModal from './components/common/BeverageInfoModal';
+import BeverageInfoModal from './components/common/Modals/BeverageInfoModal';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,7 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 class App extends Component {
   state = {
     cart: [],
-    favourites: [],
+    favorites: [],
     modalDisplay: false,
     currentBeverage: {},
   };
@@ -28,10 +28,10 @@ class App extends Component {
   componentDidMount() {
     const newState = { ...this.state };
     storageServices.initializeStorage('cart');
-    storageServices.initializeStorage('favourites');
+    storageServices.initializeStorage('favorites');
 
     newState['cart'] = storageServices.getStoredData('cart');
-    newState['favourites'] = storageServices.getStoredData('favourites');
+    newState['favorites'] = storageServices.getStoredData('favorites');
 
     this.setState(newState);
   }
@@ -55,18 +55,16 @@ class App extends Component {
             <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/cart' exact component={Cart} />
-              <Route path='/favourites' exact component={Favourites} />
+              <Route path='/favorites' exact component={Favorites} />
               <Route path='/not-found' component={NotFound} />
               <Redirect to='not-found' />
             </Switch>
           </main>
         </div>
-        {
-          <BeverageInfoModal
-            show={this.state.modalDisplay}
-            beverageInfo={this.state.currentBeverage}
-          />
-        }
+        <BeverageInfoModal
+          show={this.state.modalDisplay}
+          beverageInfo={this.state.currentBeverage}
+        />
       </AppContext.Provider>
     );
   }

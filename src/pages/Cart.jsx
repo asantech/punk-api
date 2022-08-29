@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
+import { sumBy } from 'lodash';
 
 import AppContext from '../context/AppContext';
 
-import NavBar from './NavBar';
+import NavBar from '../components/layout/navigation/Navbar/NavBar';
 
-import BeverageCard from './common/BeverageCard';
-import styles from '../components/common/BeveragesSegment.module.css';
+import BeverageCard from '../components/common/Cards/BeverageCard';
+import styles from '../components/common/Segments/BeveragesSegment.module.css';
 
 class Cart extends Component {
   static contextType = AppContext;
   render() {
     const { cart } = this.context.state;
-    const totalPrice = _.sumBy(cart, function (item) {
+    const totalPrice = sumBy(cart, function (item) {
       return item.srm;
     });
     return (

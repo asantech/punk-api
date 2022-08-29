@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import NavItem from './common/NavItem';
+import NavItem from '../../layout/navigation/Navbar/NavItem';
 
 class TabsNavBar extends Component {
   render() {

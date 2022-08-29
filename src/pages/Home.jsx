@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import _ from 'lodash';
+import { orderBy } from 'lodash';
 
 import AppContext from '../context/AppContext';
 import HomePageContext from '../context/HomePageContext';
 
 import * as beverageServices from '../services/beverageServices';
 
-import TabsNavBar from './TabsNavBar';
-import TabContents from './TabContents';
+import TabsNavBar from '../components/common/Tabs/TabsNavBar';
+import TabContents from '../components/common/Tabs/TabContents';
 
 class Home extends Component {
   static contextType = AppContext;
@@ -74,7 +74,7 @@ class Home extends Component {
 
       const { beverages } = newState;
 
-      selectedBeverages = _.orderBy(
+      selectedBeverages = orderBy(
         selectedBeverages,
         [beverages[id].sort.by],
         [beverages[id].sort.order]
@@ -106,7 +106,7 @@ class Home extends Component {
       selectedBeverages.sort.by = sortBy;
       selectedBeverages.sort.order = 'asc';
     }
-    selectedBeverages.list = _.orderBy(
+    selectedBeverages.list = orderBy(
       selectedBeverages.list,
       [selectedBeverages.sort.by],
       [selectedBeverages.sort.order]
@@ -126,7 +126,7 @@ class Home extends Component {
   };
 
   render() {
-    const { cart, favourites } = this.context.state;
+    const { cart, favorites } = this.context.state;
     return (
       <HomePageContext.Provider
         value={{
@@ -145,10 +145,10 @@ class Home extends Component {
           </Link>
           <Link
             className='btn btn-primary position-absolute'
-            to='/favourites'
+            to='/favorites'
             style={{ left: '100px' }}
           >
-            Favourites ( {favourites.length} )
+            Favorites ( {favorites.length} )
           </Link>
 
           <TabsNavBar />

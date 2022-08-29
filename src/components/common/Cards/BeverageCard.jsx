@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 
 import LazyLoad from 'react-lazyload';
 
-import AppContext from '../../context/AppContext';
-import * as beverageServices from '../../services/beverageServices';
-import * as collectionServices from '../../services/collectionServices';
+import AppContext from '../../../context/AppContext';
+import * as beverageServices from '../../../services/beverageServices';
+import * as collectionServices from '../../../services/collectionServices';
 
-import ConditionalIcon from './ConditionalIcon';
+import ConditionalIcon from '../Icons/ConditionalIcon';
 
 import styles from './BeverageCard.module.css';
 
-import '../../../node_modules/bootstrap-icons-font/dist/bootstrap-icons-font.css';
+import '../../../../node_modules/bootstrap-icons-font/dist/bootstrap-icons-font.css';
 
 class BeverageCard extends Component {
   static contextType = AppContext;

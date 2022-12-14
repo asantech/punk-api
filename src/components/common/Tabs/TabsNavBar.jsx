@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
-import NavItem from '../../layout/navigation/Navbar/NavItem';
+import NavItem from 'components/layout/navigation/MainMenu/NavItem';
 
 class TabsNavBar extends Component {
   render() {
     return (
-      <ul className='nav nav-tabs justify-content-center mb-2' role='tablist'>
+      <ul
+        className='nav nav-tabs justify-content-center mx-auto mb-2 w-75'
+        role='tablist'
+      >
         <NavItem id='all' lbl='All' />
         <NavItem id='pizza-pairable' lbl='Pizza Pairable' />
         <NavItem id='steak-pairable' lbl='Steak Pairable' />

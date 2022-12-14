@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 
-import HomePageContext from '../../../context/HomePageContext';
+import HomePageContext from 'context/HomePageContext';
 
-import SortArrowIcon from '../Icons/SortArrowIcon';
-
-import BeverageCard from '../Cards/BeverageCard';
-import Pagination from '../../layout/navigation/Pagination/Pagination';
-
-import Spinner from '../Loaders/Spinner';
+import SortArrowIcon from 'components/common/Icons/SortArrowIcon';
+import BeverageCard from 'components/common/Cards/BeverageCard';
+import Pagination from 'components/layout/navigation/Pagination/Pagination';
+import Spinner from 'components/common/Loaders/Spinner';
 
 import styles from './BeveragesSegment.module.css';
 
@@ -24,7 +22,7 @@ class BeveragesSegment extends Component {
     const beverages = this.context.state.beverages[id];
     const { list, isLoading, sort } = beverages;
 
-    const sortByNameArrowicon = sort.by === 'name' && (
+    const sortByNameArrowIcon = sort.by === 'name' && (
       <SortArrowIcon sort={sort} />
     );
 
@@ -42,7 +40,7 @@ class BeveragesSegment extends Component {
               onClick={() => this.handleSort('name')}
             >
               Sort By Name
-              {sortByNameArrowicon}
+              {sortByNameArrowIcon}
             </button>
             <button
               className='btn btn-light'

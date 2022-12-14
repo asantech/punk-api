@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import HomePageContext from '../../../context/HomePageContext';
+import HomePageContext from 'context/HomePageContext';
 
 const TabPane = props => {
   const homePageContext = useContext(HomePageContext);

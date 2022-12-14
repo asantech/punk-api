@@ -1,0 +1,21 @@
+.main-menu {
+  height: 110px;
+  padding: 0 100px !important;
+}
+
+.main-menu .logo-container {
+  z-index: 1;
+  padding: 20px 60px;
+  border-radius: 50%;
+  left: calc(50% - 135px);
+  bottom: -50%;
+}
+
+.main-menu .logo-container .logo-wrapper {
+  width: 150px;
+  min-height: 100px;
+}
+
+.main-menu .logo-container .logo-wrapper .logo {
+  width: 100%;
+}

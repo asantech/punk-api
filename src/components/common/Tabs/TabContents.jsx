@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 import TabPane from './TabPane';
-import BeveragesSegment from '../Segments/BeveragesSegment';
+import BeveragesSegment from 'components/common/Segments/BeveragesSegment';
 
 class TabContents extends Component {
   render() {
     return (
-      <div className='tab-content pt-2'>
+      <div className='tab-content pt-2 mx-auto w-75'>
         <TabPane
           id='all'
           component={() => <BeveragesSegment id='all' title='All Beverages' />}

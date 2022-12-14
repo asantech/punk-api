@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import _ from 'lodash';
 
-import HomePageContext from '../../../../context/HomePageContext';
+import HomePageContext from 'context/HomePageContext';
 
 const Pagination = props => {
   const { id } = props;

@@ -1,0 +1,12 @@
+.inner-menu .menu-list .menu-item {
+  font-size: 14px;
+}
+
+.inner-menu .menu-list .menu-item:hover {
+  color: #d0b27d !important;
+}
+
+.inner-menu .menu-list .menu-item .link-icon {
+  color: #d0b27d !important;
+  font-size: 12px;
+}

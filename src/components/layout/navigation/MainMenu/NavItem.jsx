@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import HomePageContext from '../../../../context/HomePageContext';
+import HomePageContext from 'context/HomePageContext';
 
 const NavItem = props => {
   const homePageContext = useContext(HomePageContext);

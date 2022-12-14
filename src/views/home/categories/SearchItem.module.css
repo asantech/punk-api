@@ -1,0 +1,12 @@
+.search-item {
+  width: 500px;
+  height: 200px;
+}
+
+.search-item .search-item-box {
+  max-width: 200px;
+}
+
+.search-item .search-item-box .side-col {
+  width: 25px;
+}

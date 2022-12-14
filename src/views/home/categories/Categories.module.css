@@ -1,0 +1,40 @@
+.categories {
+  background: url('../../../../public/images/views/home/sections/categories/Bg.webp');
+  height: 950px;
+  padding: 140px 0px;
+}
+
+.categories .intro-segment {
+  width: max-content;
+}
+
+.categories .intro-segment .title,
+.categories .categories-segment .title {
+  color: #d0b27d;
+}
+
+.categories .intro-segment .title {
+  margin: 0 0 20px;
+  font-size: 48px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.categories .intro-segment .text {
+  color: white;
+  margin: 0 0 30px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 1.6;
+}
+
+.categories .categories-segment .title {
+  width: max-content;
+  margin-bottom: 50px;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.categories .categories-segment .categories-container {
+  gap: 40px;
+}

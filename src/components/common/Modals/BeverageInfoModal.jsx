@@ -3,11 +3,11 @@ import { Modal } from 'react-bootstrap';
 
 import styles from './BeverageInfoModal.module.css';
 
-import DescriptionSegment from '../Segments/DescriptionSegment';
+import DescriptionSegment from 'components/common/Segments/DescriptionSegment';
 
-import AppContext from '../../../context/AppContext';
+import AppContext from 'context/AppContext';
 
-import * as collectionServices from '../../../services/collectionServices';
+import * as collectionServices from 'services/collectionServices';
 
 class BeverageInfoModal extends Component {
   static contextType = AppContext;
@@ -44,11 +44,11 @@ class BeverageInfoModal extends Component {
     );
   };
 
-  addToFavouritesBtnOnClickHandler = () => {
+  addToFavoritesBtnOnClickHandler = () => {
     const newAppState = { ...this.context.state };
     this.handleClose(
       collectionServices.addToCollection(
-        'favourites',
+        'favorites',
         this.props.beverageInfo,
         this.context.state,
         newAppState,
@@ -57,12 +57,12 @@ class BeverageInfoModal extends Component {
     );
   };
 
-  removeFromFavouritesBtnOnClickHandler = () => {
+  removeFromFavoritesBtnOnClickHandler = () => {
     const newAppState = { ...this.context.state };
 
     this.handleClose(
       collectionServices.removeFromCollection(
-        'favourites',
+        'favorites',
         this.props.beverageInfo,
         this.context.state,
         newAppState
@@ -117,19 +117,19 @@ class BeverageInfoModal extends Component {
               Remove from Cart
             </button>
           )}
-          {!collectionServices.isItemAdded(state.favourites, beverageInfo) ? (
+          {!collectionServices.isItemAdded(state.favorites, beverageInfo) ? (
             <button
               className='btn btn-primary'
-              onClick={this.addToFavouritesBtnOnClickHandler}
+              onClick={this.addToFavoritesBtnOnClickHandler}
             >
-              Add to Favourites
+              Add to Favorites
             </button>
           ) : (
             <button
               className='btn btn-danger'
-              onClick={this.removeFromFavouritesBtnOnClickHandler}
+              onClick={this.removeFromFavoritesBtnOnClickHandler}
             >
-              Remove from Favourites
+              Remove from Favorites
             </button>
           )}
         </Modal.Footer>

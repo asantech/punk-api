@@ -7,15 +7,23 @@ import * as storageServices from './services/storageServices';
 
 import AppContext from './context/AppContext';
 
-import Home from './pages/Home';
-import Cart from './pages/Cart';
-import Favorites from './pages/Favorites';
-import NotFound from './pages/NotFound';
+import Home from 'views/home/homePage/HomePage';
+import Cart from 'pages/Cart';
+import Favorites from 'pages/Favorites';
+import NotFoundPage from 'pages/NotFoundPage';
 
-import BeverageInfoModal from './components/common/Modals/BeverageInfoModal';
+import Header from 'components/layout/header/Header';
+import NavBar from 'components/layout/navigation/MainMenu/MainMenu';
+import Footer from 'components/layout/footer/Footer';
+import BeverageInfoModal from 'components/common/Modals/BeverageInfoModal';
 
-import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons-font/dist/bootstrap-icons-font.css';
+
 import 'react-toastify/dist/ReactToastify.css';
+
+import './App.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 class App extends Component {
   state = {
@@ -50,17 +58,18 @@ class App extends Component {
     return (
       <AppContext.Provider value={appContextVal}>
         <ToastContainer theme='colored' />
-        <div className='pt-4'>
-          <main className='container position-relative p-0'>
-            <Switch>
-              <Route path='/' exact component={Home} />
-              <Route path='/cart' exact component={Cart} />
-              <Route path='/favorites' exact component={Favorites} />
-              <Route path='/not-found' component={NotFound} />
-              <Redirect to='not-found' />
-            </Switch>
-          </main>
-        </div>
+        <Header />
+        <NavBar />
+        <main className='position-relative m-0 p-0'>
+          <Switch>
+            <Route path='/' exact component={Home} />
+            <Route path='/cart' exact component={Cart} />
+            <Route path='/favorites' exact component={Favorites} />
+            <Route path='/not-found' component={NotFoundPage} />
+            <Redirect to='not-found' />
+          </Switch>
+        </main>
+        <Footer />
         <BeverageInfoModal
           show={this.state.modalDisplay}
           beverageInfo={this.state.currentBeverage}

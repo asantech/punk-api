@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import { filter } from 'lodash';
 import { toast } from 'react-toastify';
 import * as storageServices from './storageServices';
 
 export function isItemAdded(collection, itemInfo) {
-  const selectedItem = _.filter(collection, function (item) {
+  const selectedItem = filter(collection, function (item) {
     return item.id === itemInfo.id;
   });
   return selectedItem.length ? true : false;

@@ -1,8 +1,16 @@
+.beverages-segment {
+  padding: 100px 50px;
+}
+
+.beverages-segment .page-title {
+  color: #d0b27d;
+}
+
 .beverages-segment .beverages-container {
   display: grid;
   grid-template-columns: repeat(4, calc(25% - 10px));
   gap: 10px;
-  height: 370px;
+  height: 500px;
   overflow-y: auto;
   scrollbar-width: thin;
 }

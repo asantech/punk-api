@@ -1,24 +1,68 @@
 .beverage-card {
+  max-width: 270px;
   cursor: pointer;
 }
 
 .beverage-card .img-box {
-  height: 170px;
+  height: 270px;
   text-align: center;
+  background-color: #fafafa;
 }
 
 .beverage-card .img-box img {
   max-height: 100%;
 }
 
-.beverage-card .card-title,
-.beverage-card .card-text {
+.beverage-card .card-title {
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.beverage-card .card-title {
-  height: 48px;
+.beverage-card .card-actions {
+  height: 50px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.beverage-card .card-actions .action-button {
+  transition: bottom 0.4s ease;
+  height: 50px;
+  bottom: -50px;
+}
+
+.beverage-card .card-actions .action-button:nth-child(odd) {
+  background-color: #d0b27d;
+}
+
+.beverage-card .card-actions .action-button:nth-child(even) {
+  background-color: #dec08d;
+}
+
+.beverage-card .card-actions .action-button:hover {
+  background-color: #b1976a;
+  color: white;
+}
+
+.beverage-card .card-actions .action-button:nth-child(2) {
+  transition-delay: 0.1s;
+  left: 25%;
+}
+
+.beverage-card .card-actions .action-button:nth-child(3) {
+  transition-delay: 0.2s;
+  left: 50%;
+}
+
+.beverage-card .card-actions .action-button:nth-child(4) {
+  transition-delay: 0.3s;
+  left: 75%;
+}
+
+.beverage-card:hover .card-actions {
+  opacity: 1;
+}
+
+.beverage-card:hover .card-actions .action-button {
+  bottom: 0;
 }

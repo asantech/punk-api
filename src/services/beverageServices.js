@@ -1,9 +1,7 @@
 import Axios from 'axios';
 
-import config from '../config.json';
-
-import * as beverageServices from '../services/beverageServices';
-import * as generalServices from '../services/generalServices';
+import * as beverageServices from 'services/beverageServices';
+import * as generalServices from 'services/common.helpers';
 
 Axios.interceptors.response.use(null, error => {
   const expectedError =
@@ -21,7 +19,7 @@ Axios.interceptors.response.use(null, error => {
 
 export async function getBeverages(queryStr) {
   const { data: beverages } = await Axios.get(
-    config.apiBaseURL + '/beers' + (queryStr ? '?' + queryStr : '')
+    'https://api.punkapi.com/v2' + '/beers' + (queryStr ? '?' + queryStr : '')
   );
   return beverages;
 }

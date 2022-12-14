@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Component } from 'react';
 import { toast } from 'react-toastify';
 import { orderBy } from 'lodash';
 
-import AppContext from '../context/AppContext';
-import HomePageContext from '../context/HomePageContext';
+import AppContext from 'context/AppContext';
+import HomePageContext from 'context/HomePageContext';
 
-import * as beverageServices from '../services/beverageServices';
+import * as beverageServices from 'services/beverageServices';
 
-import TabsNavBar from '../components/common/Tabs/TabsNavBar';
-import TabContents from '../components/common/Tabs/TabContents';
+import AdsCarousel from '../adsCarousel/AdsCarousel';
+import RandomBeverages from '../randomBeverages/RandomBeverages';
+import Categories from '../categories/Categories';
 
 class Home extends Component {
   static contextType = AppContext;
@@ -54,13 +54,6 @@ class Home extends Component {
     },
     modalDisplay: false,
   };
-
-  componentDidMount() {
-    this.loadSelectedBeverages({
-      id: 'all',
-      newState: this.state,
-    });
-  }
 
   loadSelectedBeverages = async ({ id, newState }) => {
     if (newState.beverages[id].isLoading === false) {
@@ -126,7 +119,6 @@ class Home extends Component {
   };
 
   render() {
-    const { cart, favorites } = this.context.state;
     return (
       <HomePageContext.Provider
         value={{
@@ -136,24 +128,9 @@ class Home extends Component {
           sortItems: this.sortItems,
         }}
       >
-        <>
-          <Link
-            className='btn btn-success position-absolute start-0'
-            to='/cart'
-          >
-            Cart ( {cart.length} )
-          </Link>
-          <Link
-            className='btn btn-primary position-absolute'
-            to='/favorites'
-            style={{ left: '100px' }}
-          >
-            Favorites ( {favorites.length} )
-          </Link>
-
-          <TabsNavBar />
-          <TabContents />
-        </>
+        <AdsCarousel />
+        <RandomBeverages />
+        <Categories />
       </HomePageContext.Provider>
     );
   }

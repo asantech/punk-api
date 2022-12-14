@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
-import AppContext from '../context/AppContext';
+import AppContext from 'context/AppContext';
 
-import NavBar from '../components/layout/navigation/Navbar/NavBar';
-
-import BeverageCard from '../components/common/Cards/BeverageCard';
-import styles from '../components/common/Segments/BeveragesSegment.module.css';
+import BeverageCard from 'components/common/Cards/BeverageCard';
+import styles from 'components/common/Segments/BeveragesSegment.module.css';
 
 class Favorites extends Component {
   static contextType = AppContext;
@@ -14,9 +12,10 @@ class Favorites extends Component {
     const { favorites } = this.context.state;
     return (
       <>
-        <NavBar />
         <div className={styles['beverages-segment']}>
-          <h2 className='mb-4'>Favorite beverages ( {favorites.length} )</h2>
+          <h2 className={styles['page-title'] + ' fw-bold fs-2 mb-4'}>
+            Favorite beverages ( {favorites.length} )
+          </h2>
           <div
             id='favorites-page-beverages-container'
             className={styles['beverages-container'] + ' mb-2'}

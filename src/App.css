@@ -1,0 +1,26 @@
+/* devanagari */
+
+@font-face {
+  font-family: 'Bitter';
+  font-style: normal;
+  font-weight: 200;
+  src: url('../public/fonts/Bitter-Light.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Bitter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../public/fonts/Bitter-Medium.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Bitter';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../public/fonts/Bitter-Bold.ttf') format('ttf');
+}
+
+* {
+  font-family: Bitter;
+}

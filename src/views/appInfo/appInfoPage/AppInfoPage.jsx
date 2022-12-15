@@ -1,17 +1,15 @@
-import styles from './AppInfoPage.module.css';
-
 function AppInfoPage() {
   return (
     <>
-      <div className={styles['app-info-page']}>
-        <div className='color-gold mb-5 fs-2 fw-bold'>App Info</div>
+      <div className='app-info-page db-page-padding-2'>
+        <div className='db-color-gold mb-5 fs-2 fw-bold'>App Info</div>
         <p className='fs-4'>
           I will give an overview about this app which is not the GitHub repo's
           "ReadMe" file. There I have completely explained about all the
           technical details. The github link of this project is:
           <br></br>
           <a
-            className='text-decoration-none color-gold'
+            className='text-decoration-none db-color-gold'
             href='https://github.com/asantech/punk-api'
           >
             https://github.com/asantech/punk-api
@@ -40,7 +38,7 @@ function AppInfoPage() {
           out the link below:
           <br></br>
           <a
-            className='text-decoration-none color-gold'
+            className='text-decoration-none db-color-gold'
             href='https://punkapi.com/'
           >
             https://punkapi.com/
@@ -52,7 +50,7 @@ function AppInfoPage() {
             <li>
               To give a good UI which I have taken from the
               <a
-                className='text-decoration-none color-gold'
+                className='text-decoration-none db-color-gold'
                 href='https://themeforest.net'
               >
                 https://themeforest.net

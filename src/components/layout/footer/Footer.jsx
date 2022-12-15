@@ -1,5 +1,5 @@
-import ContactsList from 'components/common/lists/ContactsList';
-import { footerCols } from 'utils/constants/linksCfg';
+import ContactsList from 'components/custom/lists/ContactsList';
+import { FOOTER_COLS } from 'utils/constants/linksCfg';
 
 import styles from './Footer.module.css';
 
@@ -14,7 +14,7 @@ function Footer() {
             <img className='mb-5' src='logo.webp' />
             <ContactsList listItemClassName='mb-1 text-white' />
           </div>
-          {footerCols.map(({ heading, list }, i) => (
+          {FOOTER_COLS.map(({ heading, list }, i) => (
             <div
               key={i}
               className={

@@ -1,4 +1,4 @@
-export const headerTopMenuLinks = Object.freeze([
+export const HEADER_TOP_MENU_LINKS = Object.freeze([
   //TODO: check the reason for not working on array
   {
     name: 'App Info',
@@ -26,7 +26,7 @@ export const headerTopMenuLinks = Object.freeze([
   },
 ]);
 
-export const navbarLinks = Object.freeze([
+export const NAVBAR_LINKS = Object.freeze([
   {
     name: 'Home',
     path: '/',
@@ -46,7 +46,7 @@ export const navbarLinks = Object.freeze([
   },
 ]);
 
-export const beverageCardLinks = Object.freeze([
+export const BEVERAGE_CARD_LINKS = Object.freeze([
   {
     name: 'cart',
     iconClassName: 'bi-bag-fill',
@@ -65,11 +65,11 @@ export const beverageCardLinks = Object.freeze([
   },
 ]);
 
-export const categoriesLinks = Object.freeze([
+export const CATEGORY_LINKS = Object.freeze([
   [
     {
       color: '#cebfb0',
-      content: 'images/views/home/sections/categories/Beer.webp',
+      content: 'images/views/home/categories/Beer.webp',
       isImg: true,
     },
     {
@@ -87,7 +87,7 @@ export const categoriesLinks = Object.freeze([
   [
     {
       color: '#d85e34',
-      content: 'images/views/home/sections/categories/Barrel.webp',
+      content: 'images/views/home/categories/Barrel.webp',
       hasRightCol: true,
       isImg: true,
     },
@@ -105,7 +105,7 @@ export const categoriesLinks = Object.freeze([
   [
     {
       color: '#aa9060',
-      content: 'images/views/home/sections/categories/Globe.webp',
+      content: 'images/views/home/categories/Globe.webp',
       isImg: true,
       hasRightCol: true,
     },
@@ -122,7 +122,7 @@ export const categoriesLinks = Object.freeze([
   ],
 ]);
 
-export const footerCols = Object.freeze([
+export const FOOTER_COLS = Object.freeze([
   {
     heading: 'My Account',
     list: ['My Account', 'Order Status', 'My Basket', 'My Wishlist'],
@@ -137,7 +137,7 @@ export const footerCols = Object.freeze([
   },
 ]);
 
-export const socialMediaIcons = Object.freeze([
+export const SOCIAL_MEDIA_ICONS = Object.freeze([
   {
     iconClassName: 'bi-twitter',
   },
@@ -158,5 +158,31 @@ export const socialMediaIcons = Object.freeze([
   },
   {
     iconClassName: 'discord',
+  },
+]);
+
+export const CONTACT_INFO = Object.freeze([
+  {
+    iconClassName: 'bi-telephone-fill',
+    content: '+989359054975',
+  },
+  {
+    iconClassName: 'bi-envelope-fill',
+    content: 'moayeri68@gmail.com',
+  },
+  {
+    iconClassName: 'bi-geo-alt-fill',
+    content: 'Iran, Tehran Province, Tehran City',
+  },
+  {
+    iconClassName: 'bi-square-fill',
+    content: (
+      <a
+        className='text-decoration-none db-color-gold'
+        href='https://www.linkedin.com/in/mohammad-hossein-moayeri-236585b8/'
+      >
+        LinkedIn
+      </a>
+    ),
   },
 ]);

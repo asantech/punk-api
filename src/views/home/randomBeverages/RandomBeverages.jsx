@@ -1,36 +1,96 @@
 import { useState, useEffect } from 'react';
 
+import { has } from 'lodash';
+
 import styles from './RandomBeverages.module.css';
 import http from 'services/http.service';
 
-import BeverageCard from 'components/common/Cards/BeverageCard';
+import BeverageCard from 'components/common/cards/BeverageCard';
 import Skeleton from 'react-loading-skeleton';
 
 const queryObj = {
   ids: '1|2|3|4|5|6|7|8',
 };
 
+function ErrorMsgContainer(props) {
+  return (
+    <div
+      className={
+        styles['error-msg-container'] +
+        ' d-grid justify-content-center align-items-center w-100 fw-bolder text-center mt-5'
+      }
+    >
+      {has(props.error, 'message') ? (
+        <>
+          <span className='fs-1'>
+            The error below occurred{' '}
+            <i className='bi bi-exclamation-circle'></i>
+          </span>
+          <span className='fs-3'>( {props.error.message} )</span>
+        </>
+      ) : (
+        <span className='fs-1'>
+          An error has occurred <i className='bi bi-exclamation-circle'></i>
+        </span>
+      )}
+      <br></br>
+      <span className='fs-2 mb-4'>
+        You can reload by clicking the button below
+      </span>
+      <button
+        type='button'
+        className={
+          styles['reload-btn'] +
+          ' px-4 py-2 text-uppercase fw-bold fs-5 db-bg-color-gold db-border-color-gold db-border-style-solid border-1 rounded text-white mx-auto'
+        }
+        onClick={props.reloadBtnOnClickHandler}
+      >
+        Reload
+      </button>
+    </div>
+  );
+}
+
+function BeveragesContainer(props) {
+  return (
+    <div
+      id='random-beverages-container'
+      className={styles['random-beverages-container'] + ' d-grid h-100'}
+    >
+      {props.beverages.map((beverage, i) => (
+        <BeverageCard
+          key={i}
+          beverageInfo={beverage}
+          // scrollContainer={'#random-beverages-container'}
+        />
+      ))}
+    </div>
+  );
+}
+
 function RandomBeverages() {
-  const [randomBeverages, setRandomBeverages] = useState([]);
+  const [randomBeverages, setRandomBeverages] = useState(null);
   const [error, setError] = useState();
   const [showSkeleton, setShowSkeleton] = useState(false);
 
-  async function loadSelectedBeverages(setStateFuncs) {
+  function reloadBeverages() {
+    loadSelectedBeverages();
+  }
+
+  function loadSelectedBeverages() {
     http.get(queryObj, {
       beforeReq: () => {
-        setRandomBeverages(false);
+        setError(undefined);
+        setRandomBeverages(null);
         setShowSkeleton(true);
       },
       afterSuccess: res => {
+        setShowSkeleton(false);
         setRandomBeverages(res);
-        setError(undefined);
       },
       onError: err => {
-        setRandomBeverages(false);
-        setError(err);
-      },
-      afterReq: () => {
         setShowSkeleton(false);
+        setError(err);
       },
     });
   }
@@ -58,9 +118,9 @@ function RandomBeverages() {
             styles['random-beverages-segment'] + ' mx-auto overflow-hidden'
           }
         >
-          <h2 className='text-center mt-5 mb-4 fs-1 fw-bolder'>
+          <div className='text-center my-4 fs-1 fw-bolder'>
             Beverages Shown Randomly
-          </h2>
+          </div>
           {showSkeleton && (
             <Skeleton
               width={270}
@@ -74,38 +134,13 @@ function RandomBeverages() {
             />
           )}
           {error && (
-            <div className='d-grid justify-content-center align-items-center w-100 fw-bolder text-center mt-5'>
-              <span className='fs-1 text-danger'>An error has occurred</span>
-              <span className='fs-3 text-danger'>{error.message}</span>
-              <br></br>
-              <span className='fs-2 text-danger mb-5'>
-                You can retry by clicking the button below
-              </span>
-              <button
-                type='button'
-                className='btn btn-primary'
-                onClick={() => {
-                  setError(undefined);
-                  loadSelectedBeverages();
-                }}
-              >
-                Retry
-              </button>
-            </div>
+            <ErrorMsgContainer
+              reloadBtnOnClickHandler={reloadBeverages}
+              error={error}
+            />
           )}
           {randomBeverages && (
-            <div
-              id='random-beverages-container'
-              className={styles['random-beverages-container'] + ' d-grid h-100'}
-            >
-              {randomBeverages.map((beverage, i) => (
-                <BeverageCard
-                  key={i}
-                  beverageInfo={beverage}
-                  // scrollContainer={'#random-beverages-container'}
-                />
-              ))}
-            </div>
+            <BeveragesContainer beverages={randomBeverages} />
           )}
         </div>
       </div>

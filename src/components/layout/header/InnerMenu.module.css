@@ -1,5 +1,7 @@
 .inner-menu .menu-list .menu-item {
   font-size: 14px;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  line-height: 26px;
 }
 
 .inner-menu .menu-list .menu-item:hover {

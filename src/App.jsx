@@ -1,32 +1,24 @@
-import React, { Component } from 'react';
-
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import * as storageServices from './services/storage.services';
 
 import AppContext from './context/AppContext';
+import { BeveragesProvider } from 'context/Beverages';
 
-import HomePage from 'views/home/homePage/HomePage';
-import CartPage from 'views/cart/cartPage/CartPage';
-import FavoritesPage from 'views/favorites/favoritesPage/FavoritesPage';
-import NotFoundPage from 'views/errors/notFoundPage/NotFoundPage';
-import ContactMePage from 'views/contactMe/contactMePage/ContactMePage';
-import AppInfoPage from 'views/appInfo/appInfoPage/AppInfoPage';
-import AboutMePage from 'views/aboutMe/aboutMePage/AboutMePage';
+import MainRouter from 'components/routing/MainRouter';
 
 import Header from 'components/layout/header/Header';
-import NavBar from 'components/layout/navigation/MainMenu/MainMenu';
+import NavBar from 'components/layout/navigation/mainMenu/MainMenu';
 import Footer from 'components/layout/footer/Footer';
-import BeverageInfoModal from 'components/common/Modals/BeverageInfoModal';
+import BeverageInfoModal from 'modals/BeverageInfoModal';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons-font/dist/bootstrap-icons-font.css';
-
+import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 class App extends Component {
   state = {
@@ -63,17 +55,10 @@ class App extends Component {
         <ToastContainer theme='colored' />
         <Header />
         <NavBar />
-        <main className='position-relative m-0 p-0'>
-          <Switch>
-            <Route path='/' exact component={HomePage} />
-            <Route path='/cart' exact component={CartPage} />
-            <Route path='/favorites' exact component={FavoritesPage} />
-            <Route path='/contact-me' exact component={ContactMePage} />
-            <Route path='/app-info' exact component={AppInfoPage} />
-            <Route path='/about-me' exact component={AboutMePage} />
-            <Route path='/not-found' component={NotFoundPage} />
-            <Redirect to='not-found' />
-          </Switch>
+        <main className='m-0 p-0' style={{ minHeight: '500px' }}>
+          <BeveragesProvider>
+            <MainRouter />
+          </BeveragesProvider>
         </main>
         <Footer />
         <BeverageInfoModal

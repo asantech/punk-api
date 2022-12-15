@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { navbarLinks } from 'utils/constants/linksCfg';
+import { NAVBAR_LINKS } from 'utils/constants/linksCfg';
 
 import styles from './MainMenu.module.css';
 
@@ -12,7 +12,7 @@ function MainMenu() {
       }
     >
       <ul className='navbar-list d-flex list-unstyled w-100 mb-0'>
-        {navbarLinks.map(({ name: linkName, path, firstRightAligned }, i) => (
+        {NAVBAR_LINKS.map(({ name: linkName, path, firstRightAligned }, i) => (
           <li
             key={i}
             className={'nav-item me-5' + (firstRightAligned ? ' ms-auto' : '')}

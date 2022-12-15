@@ -1,10 +1,8 @@
-import styles from './AboutMePage.module.css';
-
 function AboutMePage() {
   return (
     <>
-      <div className={styles['about-me-page']}>
-        <h1 className='color-gold fs-2 mb-5 fw-bold'>About Me</h1>
+      <div className='about-me-page db-page-padding-2'>
+        <h1 className='db-color-gold fs-2 mb-5 fw-bold'>About Me</h1>
 
         <div
           className='img-wrapper d-flex p-2 mx-auto my-5 rounded-circle overflow-hidden'
@@ -77,7 +75,7 @@ function AboutMePage() {
           link:
           <br></br>
           <a
-            className='text-decoration-none color-gold'
+            className='text-decoration-none db-color-gold'
             href='https://github.com/asantech'
           >
             https://github.com/asantech

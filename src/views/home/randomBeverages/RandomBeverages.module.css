@@ -27,3 +27,12 @@
   grid-template-rows: repeat(2, min-content);
   grid-gap: 10px;
 }
+
+.error-msg-container {
+  margin-top: 250px;
+  color: #ff6969;
+}
+
+.error-msg-container .reload-btn {
+  width: max-content;
+}

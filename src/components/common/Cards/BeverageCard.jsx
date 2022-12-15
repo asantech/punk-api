@@ -5,9 +5,9 @@ import AppContext from 'context/AppContext';
 import * as beverageServices from 'services/beverage.services';
 import * as collectionServices from 'services/collection.services';
 
-import ConditionalIcon from 'components/common/Icons/ConditionalIcon';
+import ConditionalIcon from 'components/common/icons/ConditionalIcon';
 
-import { beverageCardLinks } from 'utils/constants/linksCfg';
+import { BEVERAGE_CARD_LINKS } from 'utils/constants/linksCfg';
 
 import styles from './BeverageCard.module.css';
 
@@ -15,7 +15,7 @@ function BeverageCard(props) {
   const appContext = useContext(AppContext);
 
   const { beverageInfo, scrollContainer } = props;
-  const { id, name, image_url, volume } = beverageInfo;
+  const { id, name, image_url, srm } = beverageInfo;
   const { state, displayBeverageInfoModal } = appContext;
 
   const actions = [
@@ -34,7 +34,7 @@ function BeverageCard(props) {
     <div
       className={
         styles['beverage-card'] +
-        ' card border-0 rounded-0 position-relative cursor-pointer'
+        ' card border-0 rounded-0 position-relative db-cursor-pointer'
       }
     >
       <div className='d-flex justify-content-between position-absolute top-0 left-0 w-100'>
@@ -69,7 +69,7 @@ function BeverageCard(props) {
           ' d-flex justify-content-center align-items-center p-5'
         }
       >
-        <img src={image_url} alt={name} />
+        <img className='db-transform-2' src={image_url} alt={name} />
       </div>
       {/* </LazyLoad> */}
 
@@ -83,14 +83,14 @@ function BeverageCard(props) {
         >
           {name}
         </h5>
-        <span className='fs-4'>${volume.value}</span>
+        <span className='fs-4'>${srm}</span>
       </div>
       <div
         className={
           styles['card-actions'] + ' d-flex position-relative overflow-hidden'
         }
       >
-        {beverageCardLinks.map((link, i) => (
+        {BEVERAGE_CARD_LINKS.map((link, i) => (
           <button
             key={i}
             className={

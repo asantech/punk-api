@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ConditionalIcon = props => {
   const { isOffCondition, offIconCSSClass, onIconCSSClass, color, bgColor } =
     props;

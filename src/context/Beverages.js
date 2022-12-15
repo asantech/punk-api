@@ -1,9 +1,52 @@
-import React from 'react';
+import { createContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
-const BeveragesContext = React.createContext();
+import http from 'services/http.service';
+
+const BeveragesContext = createContext();
 BeveragesContext.displayName = 'BeveragesContext';
 
-const BeveragesProvider = ({ children }) => (
-  <BeveragesContext.Provider>{children}</BeveragesContext.Provider>
-);
+let initialState = {
+  list: [],
+  query: {
+    page: 1,
+  },
+};
+
+const BeveragesProvider = ({ children }) => {
+  const [beverages, setBeverages] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
+
+  function loadSelectedBeverages(query) {
+    http.get(query, {
+      beforeReq: () => {
+        setIsLoading(true);
+      },
+      afterSuccess: res => {
+        setIsLoading(false);
+        setBeverages({
+          list: res,
+          query,
+        });
+        toast.success('beverages are loaded successfully.', {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      },
+      onError: error => {
+        setIsLoading(false);
+        toast.error(error.message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      },
+    });
+  }
+
+  return (
+    <BeveragesContext.Provider
+      value={{ beverages, loadSelectedBeverages, isLoading }}
+    >
+      {children}
+    </BeveragesContext.Provider>
+  );
+};
 export { BeveragesContext, BeveragesProvider };

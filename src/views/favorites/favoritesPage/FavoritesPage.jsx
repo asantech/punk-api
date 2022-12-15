@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import AppContext from 'context/AppContext';
 
-import BeverageCard from 'components/common/Cards/BeverageCard';
-import styles from 'components/common/Segments/BeveragesSegment.module.css';
+import BeverageCard from 'components/common/cards/BeverageCard';
+import styles from 'components/common/segments/BeveragesSegment.module.css';
 
 class Favorites extends Component {
   static contextType = AppContext;
@@ -12,8 +12,8 @@ class Favorites extends Component {
     const { favorites } = this.context.state;
     return (
       <>
-        <div className={styles['beverages-segment']}>
-          <div className={'color-gold fw-bold fs-2 mb-5'}>
+        <div className={styles['beverages-segment'] + ' db-page-padding-1'}>
+          <div className={'db-color-gold fw-bold fs-2 mb-5'}>
             Favorite beverages ( {favorites.length} )
           </div>
           <div

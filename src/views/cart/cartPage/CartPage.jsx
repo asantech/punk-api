@@ -3,8 +3,8 @@ import { sumBy } from 'lodash';
 
 import AppContext from 'context/AppContext';
 
-import BeverageCard from 'components/common/Cards/BeverageCard';
-import styles from 'components/common/Segments/BeveragesSegment.module.css';
+import BeverageCard from 'components/common/cards/BeverageCard';
+import styles from 'components/common/segments/BeveragesSegment.module.css';
 
 class Cart extends Component {
   static contextType = AppContext;
@@ -15,8 +15,8 @@ class Cart extends Component {
     });
     return (
       <>
-        <div className={styles['beverages-segment']}>
-          <h2 className={'color-gold fw-bold fs-2 mb-4'}>
+        <div className={styles['beverages-segment'] + ' db-page-padding-1'}>
+          <h2 className={'db-color-gold fw-bold fs-2 mb-4'}>
             Cart ( {cart.length} )
           </h2>
           <h5 className=' mb-4'>Total Price: $ {totalPrice}</h5>

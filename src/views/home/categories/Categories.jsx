@@ -1,4 +1,4 @@
-import { categoriesLinks } from 'utils/constants/linksCfg';
+import { CATEGORY_LINKS } from 'utils/constants/linksCfg';
 
 import SearchItem from './SearchItem';
 
@@ -26,7 +26,7 @@ function Categories() {
             ' d-flex justify-content-center flex-wrap'
           }
         >
-          {categoriesLinks.map((linkSpecs, i) => (
+          {CATEGORY_LINKS.map((linkSpecs, i) => (
             <SearchItem key={i} specs={linkSpecs} />
           ))}
         </div>

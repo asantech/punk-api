@@ -1,22 +1,19 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
-import _ from 'lodash';
+import { range, isNumber } from 'lodash';
 
-import HomePageContext from 'context/HomePageContext';
-
-const Pagination = props => {
-  const { id } = props;
-  const homePageContext = useContext(HomePageContext);
-  const { list, query } = homePageContext.state.beverages[id];
-  const page = query.page;
-  const pages = _.range(1, page + 1);
-  let paginationBtnsLbls;
+function Pagination(props) {
+  // const { context } = props;
+  // const beverages = useContext(context);
+  const { page, isNextBtnDisabled, goToPage } = props;
+  const pages = range(1, page + 1);
+  let paginationLabels;
 
   // مکانش بررسی شود
   if (pages.length <= 5) {
-    paginationBtnsLbls = pages;
+    paginationLabels = pages;
   } else {
-    paginationBtnsLbls = [
+    paginationLabels = [
       1,
       '...',
       Math.floor(pages.length / 2),
@@ -24,15 +21,6 @@ const Pagination = props => {
       pages.length,
     ];
   }
-
-  const goToPage = selectedPage => {
-    const newState = { ...homePageContext.state };
-    newState.beverages[id].query.page = selectedPage;
-    homePageContext.loadSelectedBeverages({
-      id,
-      newState,
-    });
-  };
 
   return (
     <nav aria-label='Page navigation example'>
@@ -47,8 +35,8 @@ const Pagination = props => {
           </button>
         </li>
 
-        {paginationBtnsLbls.length > 0 &&
-          paginationBtnsLbls.map((p, i) => {
+        {paginationLabels.length > 0 &&
+          paginationLabels.map((p, i) => {
             return (
               <li
                 key={i}
@@ -56,9 +44,7 @@ const Pagination = props => {
               >
                 <button
                   className='page-link'
-                  onClick={
-                    typeof p === 'number' ? () => goToPage(p) : undefined
-                  }
+                  onClick={isNumber(p) ? () => goToPage(p) : undefined}
                 >
                   {p}
                 </button>
@@ -66,7 +52,7 @@ const Pagination = props => {
             );
           })}
 
-        <li className={'page-item' + (list.length === 0 ? ' disabled' : '')}>
+        <li className={'page-item' + (isNextBtnDisabled ? ' disabled' : '')}>
           <button
             className='page-link'
             aria-label='Next'
@@ -78,6 +64,6 @@ const Pagination = props => {
       </ul>
     </nav>
   );
-};
+}
 
 export default Pagination;

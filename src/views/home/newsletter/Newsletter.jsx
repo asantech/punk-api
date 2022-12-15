@@ -6,7 +6,7 @@ function Newsletter() {
       <div
         className={
           styles['newsletter-heading'] +
-          ' fs-2 text-uppercase fw-bold mx-auto lh-1'
+          ' mx-auto fs-2 fw-bold text-uppercase lh-1'
         }
       >
         Sign up for our newsletter
@@ -25,7 +25,7 @@ function Newsletter() {
         <button
           className={
             styles['subscribe-button'] +
-            ' text-uppercase bg-color-gold text-white fw-bold'
+            ' fw-bold text-uppercase text-white db-bg-color-gold'
           }
           type='button'
         >

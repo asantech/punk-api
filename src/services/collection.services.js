@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { toast } from 'react-toastify';
-import * as storageServices from './storageServices';
+import * as storageServices from './storage.services';
 
 export function isItemAdded(collection, itemInfo) {
   const selectedItem = filter(collection, function (item) {

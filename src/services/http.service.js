@@ -1,5 +1,5 @@
 import api from './fetchAPI';
-import { getQueryStr } from './api.helpers';
+import { getQueryStr } from '../utils/helpers/api.helpers';
 
 const http = {
   get: async (query, callbacks) => {

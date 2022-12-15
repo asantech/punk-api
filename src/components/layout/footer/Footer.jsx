@@ -1,6 +1,7 @@
-import styles from './Footer.module.css';
+import ContactsList from 'components/common/lists/ContactsList';
+import { footerCols } from 'utils/constants/linksCfg';
 
-import { footerCols } from 'enums/linksCfg';
+import styles from './Footer.module.css';
 
 function Footer() {
   return (
@@ -10,21 +11,8 @@ function Footer() {
       >
         <div className='container d-flex'>
           <div className='col-sm-3'>
-            <img className='mb-4' src='logo.webp' />
-            <ul className='list-unstyled'>
-              <li className='mb-1 text-white'>
-                <i className='bi bi-telephone-fill me-2'></i>
-                +989359054975
-              </li>
-              <li className='mb-1 text-white'>
-                <i className='bi bi-envelope-fill me-2'></i>
-                moayeri68@gmail.com
-              </li>
-              <li className='mb-1 text-white'>
-                <i className='bi bi-geo-alt-fill  me-2'></i>
-                Iran, Tehran Province, Tehran City
-              </li>
-            </ul>
+            <img className='mb-5' src='logo.webp' />
+            <ContactsList listItemClassName='mb-1 text-white' />
           </div>
           {footerCols.map(({ heading, list }, i) => (
             <div

@@ -7,7 +7,7 @@ import DescriptionSegment from 'components/common/Segments/DescriptionSegment';
 
 import AppContext from 'context/AppContext';
 
-import * as collectionServices from 'services/collectionServices';
+import * as collectionServices from 'services/collection.services';
 
 class BeverageInfoModal extends Component {
   static contextType = AppContext;

@@ -19,9 +19,9 @@ export const headerTopMenuLinks = Object.freeze([
     rightAligned: true,
   },
   {
-    name: 'Cart (0)',
+    name: cartCount => `Cart (${cartCount})`,
     path: '/cart',
-    iconClassName: 'bi-cart-fill',
+    iconClassName: 'bi-bag-fill',
     rightAligned: true,
   },
 ]);
@@ -77,7 +77,6 @@ export const categoriesLinks = Object.freeze([
       content: 'Food Pairs',
       hasLeftCol: true,
     },
-
     {
       color: '#d85e34',
       content: 'Browse Food Pairs',

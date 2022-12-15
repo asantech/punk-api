@@ -5,11 +5,13 @@ import { orderBy } from 'lodash';
 import AppContext from 'context/AppContext';
 import HomePageContext from 'context/HomePageContext';
 
-import * as beverageServices from 'services/beverageServices';
+import * as beverageServices from 'services/beverage.services';
 
 import AdsCarousel from '../adsCarousel/AdsCarousel';
 import RandomBeverages from '../randomBeverages/RandomBeverages';
 import Categories from '../categories/Categories';
+import Ad from '../ad/Ad';
+import Newsletter from '../newsletter/Newsletter';
 
 class Home extends Component {
   static contextType = AppContext;
@@ -131,6 +133,8 @@ class Home extends Component {
         <AdsCarousel />
         <RandomBeverages />
         <Categories />
+        <Ad />
+        <Newsletter />
       </HomePageContext.Provider>
     );
   }

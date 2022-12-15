@@ -24,3 +24,15 @@
 * {
   font-family: Bitter;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.color-gold {
+  color: #d0b27d;
+}
+
+.bg-color-gold {
+  background-color: #d0b27d;
+}

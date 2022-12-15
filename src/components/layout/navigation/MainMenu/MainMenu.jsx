@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { navbarLinks } from 'enums/linksCfg';
+import { navbarLinks } from 'utils/constants/linksCfg';
 
 import styles from './MainMenu.module.css';
 

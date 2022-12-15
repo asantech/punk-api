@@ -3,14 +3,17 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import * as storageServices from './services/storageServices';
+import * as storageServices from './services/storage.services';
 
 import AppContext from './context/AppContext';
 
-import Home from 'views/home/homePage/HomePage';
-import Cart from 'pages/Cart';
-import Favorites from 'pages/Favorites';
-import NotFoundPage from 'pages/NotFoundPage';
+import HomePage from 'views/home/homePage/HomePage';
+import CartPage from 'views/cart/cartPage/CartPage';
+import FavoritesPage from 'views/favorites/favoritesPage/FavoritesPage';
+import NotFoundPage from 'views/errors/notFoundPage/NotFoundPage';
+import ContactMePage from 'views/contactMe/contactMePage/ContactMePage';
+import AppInfoPage from 'views/appInfo/appInfoPage/AppInfoPage';
+import AboutMePage from 'views/aboutMe/aboutMePage/AboutMePage';
 
 import Header from 'components/layout/header/Header';
 import NavBar from 'components/layout/navigation/MainMenu/MainMenu';
@@ -62,9 +65,12 @@ class App extends Component {
         <NavBar />
         <main className='position-relative m-0 p-0'>
           <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/cart' exact component={Cart} />
-            <Route path='/favorites' exact component={Favorites} />
+            <Route path='/' exact component={HomePage} />
+            <Route path='/cart' exact component={CartPage} />
+            <Route path='/favorites' exact component={FavoritesPage} />
+            <Route path='/contact-me' exact component={ContactMePage} />
+            <Route path='/app-info' exact component={AppInfoPage} />
+            <Route path='/about-me' exact component={AboutMePage} />
             <Route path='/not-found' component={NotFoundPage} />
             <Redirect to='not-found' />
           </Switch>

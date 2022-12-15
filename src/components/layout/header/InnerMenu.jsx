@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import Link from 'react-router-dom/Link';
 
-import styles from './InnerMenu.module.css';
+import AppContext from 'context/AppContext';
 
-import { headerTopMenuLinks } from 'enums/linksCfg';
+import { headerTopMenuLinks } from 'utils/constants/linksCfg';
+
+import styles from './InnerMenu.module.css';
 
 function getMenuItemStyles(rightAligned, firstRightAligned) {
   return (
@@ -14,6 +17,7 @@ function getMenuItemStyles(rightAligned, firstRightAligned) {
 }
 
 function InnerMenu() {
+  const { state } = useContext(AppContext);
   return (
     <div className={styles['inner-menu'] + ' w-100 h-100'}>
       <ul
@@ -35,7 +39,7 @@ function InnerMenu() {
                 <i
                   className={styles['link-icon'] + ' me-2 bi ' + iconClassName}
                 ></i>
-                {name}
+                {typeof name === 'function' ? name(state.cart.length) : name}
               </Link>
             </li>
           )

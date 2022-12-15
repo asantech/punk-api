@@ -2,12 +2,12 @@ import { useContext } from 'react';
 import LazyLoad from 'react-lazyload';
 
 import AppContext from 'context/AppContext';
-import * as beverageServices from 'services/beverageServices';
-import * as collectionServices from 'services/collectionServices';
+import * as beverageServices from 'services/beverage.services';
+import * as collectionServices from 'services/collection.services';
 
 import ConditionalIcon from 'components/common/Icons/ConditionalIcon';
 
-import { beverageCardLinks } from 'enums/linksCfg';
+import { beverageCardLinks } from 'utils/constants/linksCfg';
 
 import styles from './BeverageCard.module.css';
 
@@ -33,7 +33,8 @@ function BeverageCard(props) {
   return (
     <div
       className={
-        styles['beverage-card'] + ' card border-0 rounded-0 position-relative'
+        styles['beverage-card'] +
+        ' card border-0 rounded-0 position-relative cursor-pointer'
       }
     >
       <div className='d-flex justify-content-between position-absolute top-0 left-0 w-100'>
@@ -41,9 +42,10 @@ function BeverageCard(props) {
           isOffCondition={
             !collectionServices.isItemAdded(state.cart, beverageInfo)
           }
-          offIconCSSClass='bi-cart'
-          onIconCSSClass='bi-cart-plus-fill'
-          color='green'
+          offIconCSSClass='bi-bag'
+          onIconCSSClass='bi-bag-fill'
+          color='#00FF00'
+          bgColor='#90c7e026'
         />
         <ConditionalIcon
           isOffCondition={
@@ -51,7 +53,8 @@ function BeverageCard(props) {
           }
           offIconCSSClass='bi-star'
           onIconCSSClass='bi-star-fill'
-          color='gold'
+          color='#FFD700'
+          bgColor='#90c7e026'
         />
       </div>
       {/* <LazyLoad

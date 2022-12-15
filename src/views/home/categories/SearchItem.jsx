@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { lightenOrDarkenColor } from 'utils/colors.helpers';
+import { lightenOrDarkenColor } from 'utils/helpers/colors.helpers';
 
 import styles from './SearchItem.module.css';
 

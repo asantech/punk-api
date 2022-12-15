@@ -13,9 +13,9 @@ class Favorites extends Component {
     return (
       <>
         <div className={styles['beverages-segment']}>
-          <h2 className={styles['page-title'] + ' fw-bold fs-2 mb-4'}>
+          <div className={'color-gold fw-bold fs-2 mb-5'}>
             Favorite beverages ( {favorites.length} )
-          </h2>
+          </div>
           <div
             id='favorites-page-beverages-container'
             className={styles['beverages-container'] + ' mb-2'}

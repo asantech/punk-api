@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
-import * as beverageServices from 'services/beverageServices';
-import * as generalServices from 'services/common.helpers';
+import * as beverageServices from 'services/beverage.services';
+import * as generalServices from 'utils/helpers/common.helpers';
 
 Axios.interceptors.response.use(null, error => {
   const expectedError =

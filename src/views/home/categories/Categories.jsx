@@ -1,4 +1,4 @@
-import { categoriesLinks } from 'enums/linksCfg';
+import { categoriesLinks } from 'utils/constants/linksCfg';
 
 import SearchItem from './SearchItem';
 

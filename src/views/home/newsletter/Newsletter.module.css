@@ -1,0 +1,35 @@
+.newsletter {
+  padding: 75px 0px;
+  background-color: #f4f4f4;
+}
+
+.newsletter .newsletter-heading {
+  width: max-content;
+  margin-bottom: 40px;
+}
+
+.newsletter .newsletter-input-field {
+  height: 60px;
+}
+
+.newsletter .newsletter-input-field .newsletter-input {
+  color: #555;
+  padding: 0 20px;
+  max-width: 990px;
+  line-height: 1.428;
+}
+
+.newsletter .newsletter-input-field .subscribe-button {
+  transition: background-color 0.6s ease;
+  padding: 7px 20px;
+  background-color: #d0b27d;
+  border: 1px solid #d0b27d;
+  font-size: 24px;
+  font-weight: 600px;
+}
+
+.newsletter .newsletter-input-field .subscribe-button:hover {
+  border: 1px solid #d0b27d;
+  color: #d0b27d !important;
+  background-color: white;
+}

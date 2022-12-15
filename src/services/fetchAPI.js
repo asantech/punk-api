@@ -1,4 +1,4 @@
-import { isPlainObjectAndHasProp } from './common.helpers';
+import { isPlainObjectAndHasProp } from '../utils/helpers/common.helpers';
 
 const apiCfg = {
   // baseURL: process.env.REACT_APP_BASE_URL,

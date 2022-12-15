@@ -16,7 +16,7 @@ class Cart extends Component {
     return (
       <>
         <div className={styles['beverages-segment']}>
-          <h2 className={styles['page-title'] + ' fw-bold fs-2 mb-4'}>
+          <h2 className={'color-gold fw-bold fs-2 mb-4'}>
             Cart ( {cart.length} )
           </h2>
           <h5 className=' mb-4'>Total Price: $ {totalPrice}</h5>

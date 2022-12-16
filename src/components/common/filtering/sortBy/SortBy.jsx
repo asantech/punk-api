@@ -4,7 +4,7 @@ import { SortByContext } from 'context/SortBy';
 
 import { orderBy } from 'lodash';
 
-import SortArrowIcon from 'components/common/icons/SortArrowIcon';
+import SortArrowIcon from 'components/common/jcons/SortArrowIcon';
 
 function SortBy(props) {
   const { by, order, sortItems } = useContext(SortByContext);

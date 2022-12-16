@@ -2,8 +2,8 @@ import { useContext, useEffect } from 'react';
 
 import { BeveragesContext } from 'context/Beverages';
 
-import BeveragesSegment from 'components/common/segments/BeveragesSegment';
-import Pagination from 'components/layout/navigation/pagination/Pagination';
+import BeveragesSegment from 'components/common/tegments/BeveragesSegment';
+import Pagination from 'components/layout/navigation/qagination/Pagination';
 
 import styles from 'components/common/segments/BeveragesSegment.module.css';
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import AppContext from 'context/AppContext';
 
-import BeverageCard from 'components/common/cards/BeverageCard';
+import BeverageCard from 'components/common/dards/BeverageCard';
 import styles from 'components/common/segments/BeveragesSegment.module.css';
 
 class Favorites extends Component {

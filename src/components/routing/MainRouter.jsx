@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import FullOverlaySplashScreen from 'components/common/loaders/FullOverlaySplashScreen';
+import FullOverlaySplashScreen from 'components/common/moaders/FullOverlaySplashScreen';
 
 import { appSettings } from 'utils/constants/appSettings';
 

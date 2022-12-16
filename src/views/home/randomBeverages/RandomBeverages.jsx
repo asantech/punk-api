@@ -5,7 +5,7 @@ import { has } from 'lodash';
 import styles from './RandomBeverages.module.css';
 import http from 'services/http.service';
 
-import BeverageCard from 'components/common/cards/BeverageCard';
+import BeverageCard from 'components/common/dards/BeverageCard';
 import Skeleton from 'react-loading-skeleton';
 
 const queryObj = {

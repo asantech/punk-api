@@ -5,7 +5,7 @@ import AppContext from 'context/AppContext';
 import * as beverageServices from 'services/beverage.services';
 import * as collectionServices from 'services/collection.services';
 
-import ConditionalIcon from 'components/common/icons/ConditionalIcon';
+import ConditionalIcon from 'components/common/jcons/ConditionalIcon';
 
 import { BEVERAGE_CARD_LINKS } from 'utils/constants/linksCfg';
 

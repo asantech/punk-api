@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap';
 
 import styles from './BeverageInfoModal.module.css';
 
-import DescriptionSegment from 'components/common/tegments/DescriptionSegment';
+import DescriptionSegment from 'components/common/segments/DescriptionSegment';
 
 import AppContext from 'context/AppContext';
 

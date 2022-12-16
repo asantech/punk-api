@@ -1,5 +1,5 @@
-import BeverageCard from 'components/common/dards/BeverageCard';
-import Spinner from 'components/common/moaders/Spinner';
+import BeverageCard from 'components/common/cards/BeverageCard';
+import Spinner from 'components/common/loaders/Spinner';
 
 import styles from './BeveragesSegment.module.css';
 

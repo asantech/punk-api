@@ -1,15 +1,19 @@
 import { useContext, useEffect } from 'react';
 
 import { BeveragesContext } from 'context/Beverages';
+import { SortByContext } from 'context/SortBy';
 
+import SortBy from 'components/common/filtering/sortBy/SortBy';
 import BeveragesSegment from 'components/common/segments/BeveragesSegment';
 import Pagination from 'components/layout/navigation/pagination/Pagination';
 
-import styles from 'components/common/segments/BeveragesSegment.module.css';
+import { sortList } from 'utils/helpers/sortBy.helpers';
 
 function ShopPage() {
   const { beverages, loadSelectedBeverages, isLoading } =
     useContext(BeveragesContext);
+
+  const { sortByState: sortBy } = useContext(SortByContext);
 
   const { list, query } = beverages;
 
@@ -24,18 +28,17 @@ function ShopPage() {
   }, []);
 
   return (
-    <div className={styles['shop-page'] + ' db-page-padding-1'}>
+    <div className={'shop-page db-page-padding-1'}>
       <div className='db-color-gold fw-bold fs-2 mb-4'>Shop Page</div>
-      <div
-        id='shop-container'
-        className={styles['shop-container'] + ' mb-2'}
-      ></div>
+      <SortBy />
+
       <BeveragesSegment
         id='shop-page'
         title='Beverages'
-        list={list}
+        list={sortList(list, sortBy)}
         isLoading={isLoading}
       />
+
       <Pagination
         isNextBtnDisabled={list.length === 0}
         goToPage={goToPage}

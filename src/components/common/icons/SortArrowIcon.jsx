@@ -3,9 +3,7 @@ const SortArrowIcon = props => {
     <i
       className={
         'bi mx-1' +
-        (props.sort.order === 'asc'
-          ? ' bi-caret-up-fill'
-          : ' bi-caret-down-fill')
+        (props.order === 'asc' ? ' bi-caret-up-fill' : ' bi-caret-down-fill')
       }
     ></i>
   );

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import http from 'services/http.service';

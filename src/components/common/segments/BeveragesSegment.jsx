@@ -3,6 +3,10 @@ import Spinner from 'components/common/loaders/Spinner';
 
 import styles from './BeveragesSegment.module.css';
 
+import { SortByProvider } from 'context/SortBy';
+
+import SortBy from '../filtering/sortBy/SortBy';
+
 // loadSelectedBeverages = async ({ id, newState }) => {
 //   if (newState.beverages[id].isLoading === false) {
 //     newState.beverages[id].isLoading = true;

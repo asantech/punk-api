@@ -1,6 +1,7 @@
 .beverages-segment .beverages-container {
   display: grid;
   grid-template-columns: repeat(4, calc(25% - 10px));
+  min-height: 500px;
   gap: 10px;
 }
 

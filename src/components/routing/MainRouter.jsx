@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import FullOverlaySplashScreen from 'components/common/loaders/FullOverlaySplashScreen';
 
+import { SortByProvider } from 'context/SortBy';
+
 import { appSettings } from 'utils/constants/appSettings';
 
 const { MODULE_LAZY_IMPORT_DELAY } = appSettings;
@@ -89,7 +91,14 @@ function MainRouter() {
         <Route path='/contact-me' element={<ContactMePage />} />
         <Route path='/app-info' element={<AppInfoPage />} />
         <Route path='/about-me' element={<AboutMePage />} />
-        <Route path='/shop' element={<ShopPage />} />
+        <Route
+          path='/shop'
+          element={
+            <SortByProvider>
+              <ShopPage />
+            </SortByProvider>
+          }
+        />
         <Route path='/not-found' element={<NotFoundPage />} />
       </Routes>
     </Suspense>

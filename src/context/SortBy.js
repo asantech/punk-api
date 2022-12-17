@@ -3,36 +3,32 @@ import { createContext, useState } from 'react';
 const SortByContext = createContext();
 SortByContext.displayName = 'SortByContext';
 
-const SortByProvider = ({ children }) => {
+function SortByProvider({ children }) {
   let initialState = {
     by: 'name',
     order: 'asc',
   };
 
-  const [state, setState] = useState(initialState);
+  const [sortByState, setSortByState] = useState(initialState);
 
-  function sortItems(selectedSortBy) {
-    const { by, order } = state;
+  function updateSortByState(selectedSortBy) {
+    const { by, order } = sortByState;
 
-    const newState = { ...state };
-    // const selectedBeverages = newState.beverages[id];
+    const newSortByState = { ...sortByState };
 
     if (by === selectedSortBy) {
-      newState.order = order === 'asc' ? 'desc' : 'asc';
+      newSortByState.order = order === 'asc' ? 'desc' : 'asc';
     } else {
-      newState.by = selectedSortBy;
-      newState.order = 'asc';
+      newSortByState.by = selectedSortBy;
+      newSortByState.order = 'asc';
     }
-    // selectedBeverages.list = orderBy(
-    //   selectedBeverages.list,
-    //   [selectedBeverages.sort.by],
-    //   [selectedBeverages.sort.order]
-    // );
-    setState(newState);
+    setSortByState(newSortByState);
   }
 
-  <SortByContext.Provider value={{ state, sortItems }}>
-    {children}
-  </SortByContext.Provider>;
-};
+  return (
+    <SortByContext.Provider value={{ sortByState, updateSortByState }}>
+      {children}
+    </SortByContext.Provider>
+  );
+}
 export { SortByContext, SortByProvider };

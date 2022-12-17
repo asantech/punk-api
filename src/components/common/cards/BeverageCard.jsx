@@ -15,7 +15,7 @@ function BeverageCard(props) {
   const appContext = useContext(AppContext);
 
   const { beverageInfo, scrollContainer } = props;
-  const { id, name, image_url, srm } = beverageInfo;
+  const { id, name, image_url, abv } = beverageInfo;
   const { state, displayBeverageInfoModal } = appContext;
 
   const actions = [
@@ -83,7 +83,7 @@ function BeverageCard(props) {
         >
           {name}
         </h5>
-        <span className='fs-4'>${srm}</span>
+        <span className='fs-4'>ABV: {abv}</span>
       </div>
       <div
         className={

@@ -4,27 +4,24 @@ import { SortByContext } from 'context/SortBy';
 
 import { orderBy } from 'lodash';
 
-import SortArrowIcon from 'components/common/jcons/SortArrowIcon';
+import SortArrowIcon from 'components/common/icons/SortArrowIcon';
 
 function SortBy(props) {
-  const { by, order, sortItems } = useContext(SortByContext);
   const { children } = props;
+  const { sortByState, updateSortByState } = useContext(SortByContext);
+  const { by, order } = sortByState;
 
   function handleSort(selectedSortBy) {
-    sortItems(selectedSortBy);
+    updateSortByState(selectedSortBy);
   }
 
-  const sortByNameArrowIcon = by === 'name' && (
-    <SortArrowIcon sort={{ by, order }} />
-  );
+  const sortByNameArrowIcon = by === 'name' && <SortArrowIcon order={order} />;
 
-  const sortByABVArrowIcon = by === 'abv' && (
-    <SortArrowIcon sort={{ by, order }} />
-  );
+  const sortByABVArrowIcon = by === 'abv' && <SortArrowIcon order={order} />;
 
   return (
-    <div className='sort-by-filter'>
-      <div>
+    <>
+      <div className='sort-by-filter d-flex justify-content-end'>
         <button
           className='btn btn-light mx-2'
           onClick={() => handleSort('name')}
@@ -38,7 +35,7 @@ function SortBy(props) {
         </button>
       </div>
       {children}
-    </div>
+    </>
   );
 }
 

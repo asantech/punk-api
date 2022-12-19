@@ -60,7 +60,7 @@ function BeveragesContainer(props) {
       {props.beverages.map((beverage, i) => (
         <BeverageCard
           key={i}
-          beverageInfo={beverage}
+          beverage={beverage}
           // scrollContainer={'#random-beverages-container'}
         />
       ))}

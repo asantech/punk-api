@@ -40,8 +40,9 @@ export const NAVBAR_LINKS = Object.freeze([
     path: '/favorites',
   },
   {
-    name: 'App Info',
-    path: '/app-info',
+    name: 'settings',
+    icon: 'gear',
+    path: '/settings',
     firstRightAligned: true,
   },
 ]);

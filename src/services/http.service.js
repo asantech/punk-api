@@ -6,7 +6,7 @@ const http = {
     api.createReq(
       {
         method: 'GET',
-        queryStr: getQueryStr(query, '?'),
+        queryStr: getQueryStr(query),
       },
       callbacks
     );
@@ -15,7 +15,7 @@ const http = {
     api.createReq(
       {
         method: 'PUT',
-        queryStr: getQueryStr(query, '?'),
+        queryStr: getQueryStr(query),
       },
       callbacks
     );
@@ -24,7 +24,7 @@ const http = {
     api.createReq(
       {
         method: 'DELETE',
-        queryStr: getQueryStr(query, '?'),
+        queryStr: getQueryStr(query),
       },
       callbacks
     );
@@ -33,7 +33,7 @@ const http = {
     api.createReq(
       {
         method: 'POST',
-        queryStr: getQueryStr(query, '?'),
+        queryStr: getQueryStr(query),
       },
       callbacks
     );
@@ -42,7 +42,7 @@ const http = {
     api.createReq(
       {
         method: 'PATCH',
-        queryStr: getQueryStr(query, '?'),
+        queryStr: getQueryStr(query),
       },
       callbacks
     );

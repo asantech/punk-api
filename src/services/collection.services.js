@@ -10,7 +10,8 @@ export function isItemAdded(collection, itemInfo) {
 }
 
 export function addToCollection(...params) {
-  const [collectionName, item, state, newState, expirationDuration] = params;
+  const [collectionName, item, state, expirationDuration] = params;
+  const newState = { ...state };
   if (!isItemAdded(state[collectionName], item)) {
     let collection = [...state[collectionName]];
     collection.push(item);
@@ -32,7 +33,8 @@ export function addToCollection(...params) {
 }
 
 export function removeFromCollection(...params) {
-  const [collectionName, item, state, newState] = params;
+  const [collectionName, item, state] = params;
+  const newState = { ...state };
   if (isItemAdded(state[collectionName], item)) {
     let collection = [...state[collectionName]];
     collection = collection.filter(_item => _item.id !== item.id);

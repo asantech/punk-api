@@ -3,42 +3,6 @@ import Spinner from 'components/common/loaders/Spinner';
 
 import styles from './BeveragesSegment.module.css';
 
-import { SortByProvider } from 'context/SortBy';
-
-import SortBy from '../filtering/sortBy/SortBy';
-
-// loadSelectedBeverages = async ({ id, newState }) => {
-//   if (newState.beverages[id].isLoading === false) {
-//     newState.beverages[id].isLoading = true;
-//     this.setState(newState);
-//   }
-//   try {
-//     let selectedBeverages = await beverageServices.getSelectedBeverages({
-//       query: newState.beverages[id].query,
-//     });
-
-//     const { beverages } = newState;
-
-//     selectedBeverages = orderBy(
-//       selectedBeverages,
-//       [beverages[id].sort.by],
-//       [beverages[id].sort.order]
-//     );
-//     beverages[id].list = selectedBeverages;
-//     beverages[id].isLoading = false;
-//     if (beverages[id].list.length)
-//       toast.success('beverages are loaded successfully.', {
-//         position: toast.POSITION.BOTTOM_RIGHT,
-//       });
-//   } catch (error) {
-//     newState.beverages[id].isLoading = false;
-//     toast.error(error.message, {
-//       position: toast.POSITION.BOTTOM_RIGHT,
-//     });
-//   }
-//   this.setState(newState);
-// };
-
 function BeveragesSegment(props) {
   const { id, title, list, isLoading } = props;
 
@@ -65,10 +29,10 @@ function BeveragesSegment(props) {
         {!isLoading && list.length === 0 && <p>No beverages found.</p>}
         {!isLoading &&
           list.length !== 0 &&
-          list.map(beverageInfo => (
+          list.map(beverage => (
             <BeverageCard
-              key={beverageInfo.id}
-              beverageInfo={beverageInfo}
+              key={beverage.id}
+              beverage={beverage}
               scrollContainer={`#beverages-container-${id}`}
             />
           ))}

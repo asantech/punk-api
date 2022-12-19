@@ -1,9 +1,9 @@
-import { Component } from 'react';
+import { useContext, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import * as storageServices from './services/storage.services';
 
-import AppContext from './context/AppContext';
+import { AppContext } from './context/App';
 import { BeveragesProvider } from 'context/Beverages';
 
 import MainRouter from 'components/routing/MainRouter';
@@ -20,54 +20,35 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 
-class App extends Component {
-  state = {
-    cart: [],
-    favorites: [],
-    modalDisplay: false,
-    currentBeverage: {},
-  };
+function App() {
+  const appContext = useContext(AppContext);
+  const { appState, setAppState } = appContext;
 
-  componentDidMount() {
-    const newState = { ...this.state };
+  useEffect(() => {
+    const newAppState = { ...appState };
     storageServices.initializeStorage('cart');
     storageServices.initializeStorage('favorites');
 
-    newState['cart'] = storageServices.getStoredData('cart');
-    newState['favorites'] = storageServices.getStoredData('favorites');
+    newAppState['cart'] = storageServices.getStoredData('cart');
+    newAppState['favorites'] = storageServices.getStoredData('favorites');
 
-    this.setState(newState);
-  }
+    setAppState(newAppState);
+  }, []);
 
-  displayBeverageInfoModal = newState => {
-    newState.modalDisplay = !this.state.modalDisplay;
-    this.setState(newState);
-  };
-
-  render() {
-    const appContextVal = {
-      state: this.state,
-      displayBeverageInfoModal: this.displayBeverageInfoModal,
-    };
-
-    return (
-      <AppContext.Provider value={appContextVal}>
-        <ToastContainer theme='colored' />
-        <Header />
-        <NavBar />
-        <main className='m-0 p-0' style={{ minHeight: '500px' }}>
-          <BeveragesProvider>
-            <MainRouter />
-          </BeveragesProvider>
-        </main>
-        <Footer />
-        <BeverageInfoModal
-          show={this.state.modalDisplay}
-          beverageInfo={this.state.currentBeverage}
-        />
-      </AppContext.Provider>
-    );
-  }
+  return (
+    <>
+      <ToastContainer theme='colored' />
+      <Header />
+      <NavBar />
+      <main className='m-0 p-0' style={{ minHeight: '500px' }}>
+        <BeveragesProvider>
+          <MainRouter />
+        </BeveragesProvider>
+      </main>
+      <Footer />
+      <BeverageInfoModal />
+    </>
+  );
 }
 
 export default App;

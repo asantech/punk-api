@@ -30,8 +30,8 @@ export async function getSelectedBeverages({ query }) {
   return selectedBeverages;
 }
 
-export function setCurrentBeverage(state, beverageInfo) {
+export function setCurrentBeverage(state, beverage) {
   const newState = { ...state };
-  newState.currentBeverage = beverageInfo;
+  newState.currentItem = beverage;
   return newState;
 }

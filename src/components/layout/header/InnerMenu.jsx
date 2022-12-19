@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import AppContext from 'context/AppContext';
+import { AppContext } from 'context/App';
 
 import List from 'components/common/lists/List';
 
@@ -22,7 +22,7 @@ const listClassName =
   styles['menu-list'] + ' d-flex align-items-center list-unstyled mb-0 h-100';
 
 function InnerMenu() {
-  const { state } = useContext(AppContext);
+  const { appState } = useContext(AppContext);
   return (
     <div className={styles['inner-menu'] + ' w-100 h-100'}>
       <List
@@ -38,7 +38,7 @@ function InnerMenu() {
             <i
               className={styles['link-icon'] + ' me-2 bi ' + iconClassName}
             ></i>
-            {typeof name === 'function' ? name(state.cart.length) : name}
+            {typeof name === 'function' ? name(appState.cart.length) : name}
           </Link>
         )}
       </List>

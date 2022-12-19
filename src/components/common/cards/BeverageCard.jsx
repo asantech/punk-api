@@ -1,34 +1,81 @@
 import { useContext } from 'react';
 import LazyLoad from 'react-lazyload';
 
-import AppContext from 'context/AppContext';
-import * as beverageServices from 'services/beverage.services';
+import { AppContext } from 'context/App';
+import { ItemInfoModalContext } from 'context/ItemInfoModal';
+
 import * as collectionServices from 'services/collection.services';
 
 import ConditionalIcon from 'components/common/icons/ConditionalIcon';
 
-import { BEVERAGE_CARD_LINKS } from 'utils/constants/linksCfg';
+import { appSettings } from 'utils/constants/appSettings';
 
 import styles from './BeverageCard.module.css';
 
+const { EXPIRATION_DURATIONS } = appSettings;
+
+const actionButtonClassName =
+  styles['action-button'] +
+  ' d-flex justify-content-center align-items-center position-absolute p-0 w-25 border-0';
+
 function BeverageCard(props) {
+  const { beverage, scrollContainer } = props;
+  const { id, name, image_url, abv } = beverage;
+  const itemInfoModalContext = useContext(ItemInfoModalContext);
+  const { setItemInfoModalState } = itemInfoModalContext;
   const appContext = useContext(AppContext);
+  const { appState, setAppState } = appContext;
+  const { cart, favorites } = appState;
 
-  const { beverageInfo, scrollContainer } = props;
-  const { id, name, image_url, abv } = beverageInfo;
-  const { state, displayBeverageInfoModal } = appContext;
+  function isItemAddedToCollection(collection) {
+    return collectionServices.isItemAdded(collection, beverage);
+  }
 
-  const actions = [
-    () => {},
-    () => {
-      displayBeverageInfoModal(
-        beverageServices.setCurrentBeverage(state, beverageInfo),
-        true
-      );
-    },
-    () => {},
-    () => {},
-  ];
+  function addToCartHandler() {
+    setAppState(
+      collectionServices.addToCollection(
+        'cart',
+        beverage,
+        appState,
+        EXPIRATION_DURATIONS.CART
+      )
+    );
+  }
+
+  function removeFromCartHandler() {
+    setAppState(
+      collectionServices.removeFromCollection('cart', beverage, appState)
+    );
+  }
+
+  function getCartBtnOnClickHandler() {
+    return isItemAddedToCollection(cart)
+      ? removeFromCartHandler
+      : addToCartHandler;
+  }
+
+  function addToFavoritesHandler() {
+    setAppState(
+      collectionServices.addToCollection(
+        'favorites',
+        beverage,
+        appState,
+        EXPIRATION_DURATIONS.FAVORITES
+      )
+    );
+  }
+
+  function removeFromFavoritesHandler() {
+    setAppState(
+      collectionServices.removeFromCollection('favorites', beverage, appState)
+    );
+  }
+
+  function getFavoritesBtnOnClickHandler() {
+    return isItemAddedToCollection(favorites)
+      ? removeFromFavoritesHandler
+      : addToFavoritesHandler;
+  }
 
   return (
     <div
@@ -39,22 +86,16 @@ function BeverageCard(props) {
     >
       <div className='d-flex justify-content-between position-absolute top-0 left-0 w-100'>
         <ConditionalIcon
-          isOffCondition={
-            !collectionServices.isItemAdded(state.cart, beverageInfo)
-          }
+          className='ms-3 mt-3 text-success'
           offIconCSSClass='bi-bag'
           onIconCSSClass='bi-bag-fill'
-          color='#00FF00'
-          bgColor='#90c7e026'
+          isOffCondition={!isItemAddedToCollection(cart)}
         />
         <ConditionalIcon
-          isOffCondition={
-            !collectionServices.isItemAdded(state.favorites, beverageInfo)
-          }
+          className='mt-3 me-3 text-warning'
           offIconCSSClass='bi-star'
           onIconCSSClass='bi-star-fill'
-          color='#FFD700'
-          bgColor='#90c7e026'
+          isOffCondition={!isItemAddedToCollection(favorites)}
         />
       </div>
       {/* <LazyLoad
@@ -90,18 +131,42 @@ function BeverageCard(props) {
           styles['card-actions'] + ' d-flex position-relative overflow-hidden'
         }
       >
-        {BEVERAGE_CARD_LINKS.map((link, i) => (
-          <button
-            key={i}
-            className={
-              styles['action-button'] +
-              ' d-flex justify-content-center align-items-center position-absolute p-0 w-25 border-0'
-            }
-            onClick={actions[i]}
-          >
-            <i className={'fs-4 bi ' + link.iconClassName}></i>
-          </button>
-        ))}
+        <button
+          className={actionButtonClassName}
+          onClick={getCartBtnOnClickHandler()}
+        >
+          <ConditionalIcon
+            isOffCondition={!isItemAddedToCollection(cart)}
+            className='fs-4'
+            offIconCSSClass='bi-bag'
+            onIconCSSClass='bi-bag-fill text-success'
+          />
+        </button>
+        <button
+          className={actionButtonClassName}
+          onClick={() => {
+            setItemInfoModalState({
+              currentItem: beverage,
+              modalDisplay: true,
+            });
+          }}
+        >
+          <i className={'bi bi-eye-fill fs-4'}></i>
+        </button>
+        <button
+          className={actionButtonClassName}
+          onClick={getFavoritesBtnOnClickHandler()}
+        >
+          <ConditionalIcon
+            isOffCondition={!isItemAddedToCollection(favorites)}
+            className='fs-4'
+            offIconCSSClass='bi-heart'
+            onIconCSSClass='bi-heart-fill text-danger'
+          />
+        </button>
+        <button className={actionButtonClassName}>
+          <i className={'bi bi-arrow-left-right fs-4'}></i>
+        </button>
       </div>
     </div>
   );

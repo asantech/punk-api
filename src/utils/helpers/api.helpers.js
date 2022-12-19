@@ -1,6 +1,6 @@
 import { isPlainObject, isString, forEach } from 'lodash';
 
-export function getQueryStr(query, prefix) {
+export function getQueryStr(query, prefix = '?') {
   if (isString(query)) return query;
   if (isPlainObject(query)) {
     let queryStr = '';
